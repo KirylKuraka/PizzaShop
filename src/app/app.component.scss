@@ -1,0 +1,57 @@
+.topnav{
+    overflow: hidden;
+    background-color: rgb(66, 84, 85);
+
+    a{
+        float: left;
+        color: chartreuse;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 18px;
+
+        &:hover{
+            background-color: white;
+            color: black;
+        }
+
+        &:active{
+            background-color: coral;
+            color: white;
+        }
+    }
+
+    .personal-account{
+        float: right;
+        color: chartreuse;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 18px;
+    
+            &:hover{
+                background-color: white;
+                color: black;
+            }
+    
+            &:active{
+                background-color: coral;
+                color: white;
+            }
+    }
+}
+
+.example-from-field {
+    margin-right:  20px;
+}
+
+.login-div{
+    margin: 0 auto;
+}
+
+#center-block{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -125px 0 0 -250px;
+}

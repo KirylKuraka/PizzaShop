@@ -1,0 +1,49 @@
+<mat-card>
+    <span class="list-title">Accounts</span>
+    <mat-table [dataSource]="accounts">
+        <!--ID-->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let account">{{account.userID}}</mat-cell>
+        </ng-container>
+
+        <!--First Name-->
+        <ng-container matColumnDef="firstName">
+            <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
+            <mat-cell *matCellDef="let account">{{account.firstName}}</mat-cell>
+        </ng-container>
+
+        <!--Last Name-->
+        <ng-container matColumnDef="lastName">
+            <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
+            <mat-cell *matCellDef="let account">{{account.lastName}}</mat-cell>
+        </ng-container>
+
+        <!--Username-->
+        <ng-container matColumnDef="userName">
+            <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+            <mat-cell *matCellDef="let account">{{account.userName}}</mat-cell>
+        </ng-container>
+
+        <!--Email-->
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+            <mat-cell *matCellDef="let account">{{account.email}}</mat-cell>
+        </ng-container>
+
+        <!--Phone-->
+        <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
+            <mat-cell *matCellDef="let account">{{account.phoneNumber}}</mat-cell>
+        </ng-container>
+
+        <!--PPoints-->
+        <ng-container matColumnDef="pPoints">
+            <mat-header-cell *matHeaderCellDef>PPoints</mat-header-cell>
+            <mat-cell *matCellDef="let account">{{account.promotionalPoins}}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </mat-table>
+</mat-card>

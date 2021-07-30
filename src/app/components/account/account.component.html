@@ -1,0 +1,33 @@
+<!-- *ngIf='isHaveData' -->
+<div id="account-div">
+    <mat-card>
+        <span class="list-title">Personal account</span>
+        
+        <mat-card>
+            <label>ID: {{account.userID}}</label>
+        </mat-card>
+        <mat-card>
+            <label>First Name: {{account.firstName}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Last Name: {{account.lastName}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Username: {{account.userName}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Email: {{account.email}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Phone: {{account.phoneNumber}}</label>
+        </mat-card>
+        <mat-card>
+            <label>PPoints: {{account.promotionalPoins}}</label>
+        </mat-card>
+    
+        <div class="logout-button-div">
+            <button class="logout-button" mat-flat-button color="primary" (click)='logout()'>Logout</button>
+        </div>
+        
+    </mat-card>
+</div>
