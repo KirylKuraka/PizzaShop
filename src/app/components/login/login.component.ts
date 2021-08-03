@@ -26,9 +26,9 @@ export class LoginComponent{
         .subscribe(res => {
           let account = res as Account;
 
-          localStorage.setItem("account", this.convertAccountToString(account));
+          localStorage.setItem("account", Account.convertAccountToString(account));
 
-          if (account.role.trim().split(" - ").includes("Admin")) {
+          if (account.role.includes("Admin")) {
             alert("You're authorized as Admin")
             localStorage.setItem("isAdmin", "true")
           }
@@ -47,11 +47,6 @@ export class LoginComponent{
 
   logout() {
     this.as.logout()
-  }
-
-  convertAccountToString(a: Account): string{
-    return a.userID + ";" + a.firstName + ";" + a.lastName + ";" + a.userName + ";" +
-      a.email + ";" + a.phoneNumber + ";" + a.promotionalPoins + ";" + a.role;
   }
 
   navigateToHome(): void{

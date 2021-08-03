@@ -1,0 +1,34 @@
+<div id="account-div">
+    <mat-card>
+        <span class="list-title">Personal account</span>
+        
+        <mat-card>
+            <mat-label>ID: {{account.userID}}</mat-label>
+        </mat-card>
+        <mat-card>
+            <label>First Name: {{account.firstName}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Last Name: {{account.lastName}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Username: {{account.userName}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Email: {{account.email}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Phone: {{account.phoneNumber}}</label>
+        </mat-card>
+        <mat-card>
+            <label>PPoints: {{account.promotionalPoins}}</label>
+        </mat-card>
+        <mat-card>
+            <label>Role: {{account.role}}</label>
+        </mat-card>        
+    </mat-card>
+
+    <div>
+        <button class="back-button" mat-flat-button color="primary" (click)='goBack()'>Back</button>
+    </div>
+</div>

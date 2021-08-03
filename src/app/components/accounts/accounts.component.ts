@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Account } from 'src/app/models/account';
 import { AccountService } from 'src/app/services/account.service';
 
@@ -17,7 +18,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
     this.accountService.getAccounts()
@@ -36,15 +37,36 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   }
 
-  public redirectToUpdate = (id: string) =>{
+  public redirectToUpdate = (id: string, account: Account) =>{
 
   }
 
-  public redirectToDelete = (id: string) => {
-    alert(id)
+  public redirectToDelete = (id: string, account: Account) => {
+    if (confirm("Вы уверены, что хотите удалить выбранную запись?")) {
+      this.dataSource.data = this.dataSource.data.filter((item) => {
+        return item.userID != id;
+      })
+  
+      this.accountService.deleteAccountById(id)
+        .subscribe(res => {
+          console.log(res)
+        })
+    }
   }
 
   public redirectToDetails = (id: string) => {
+      localStorage.setItem('accountDetailsID', id)
+      this.router.navigateByUrl('accounts/deatils')
+  }
 
+  public canDelete(id: string, account: Account): boolean {
+    let currentAccount;
+
+    let storageAccount = localStorage.getItem("account");
+    if (storageAccount != null) {
+      currentAccount = Account.recoverAccount(storageAccount);
+    }
+
+    return (currentAccount?.userID != id && !account.role.includes("Admin")) ? true : false;
   }
 }

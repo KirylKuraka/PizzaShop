@@ -1,6 +1,4 @@
 <mat-card>
-    <span class="list-title">Accounts</span>
-
     <div class="filter-div-center">
         <mat-form-field>
           <input matInput type="text" (keyup)="doFilter($event)" placeholder="Filter">
@@ -60,16 +58,16 @@
             <mat-header-cell *matHeaderCellDef> Details </mat-header-cell>
             <mat-cell *matCellDef="let account">
                 <button mat-icon-button color="primary" (click)="redirectToDetails(account.userID)">
-                  <!-- <mat-icon class="mat-18">reorder</mat-icon> -->
-                 </button>
+                    <img class="image-icon" src="../../../assets/details_icon.ico">
+              </button>
             </mat-cell>
           </ng-container>
 
         <ng-container matColumnDef="update">
             <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
             <mat-cell *matCellDef="let account">
-                <button mat-icon-button color="accent" (click)="redirectToUpdate(account.userID)">
-                <!-- <mat-icon class="mat-18">system_update</mat-icon> -->
+                <button mat-icon-button color="accent" (click)="redirectToUpdate(account.userID, account)">
+                    <img class="image-icon" src="../../../assets/edit_icon.ico">
                  </button>
             </mat-cell>
         </ng-container>
@@ -77,8 +75,8 @@
         <ng-container matColumnDef="delete">
             <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
             <mat-cell *matCellDef="let account">
-                <button mat-icon-button color="warn" (click)="redirectToDelete(account.userID)">
-                    <!-- <mat-icon class="mat-18">delete</mat-icon> -->
+                <button class="delete-btn" mat-icon-button color="warn" (click)="redirectToDelete(account.userID, account)" *ngIf="canDelete(account.userID, account)">
+                    <img class="image-icon" src="../../../assets/delete_icon.ico">
                 </button>
             </mat-cell>
         </ng-container>

@@ -13,7 +13,6 @@ import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatFormFieldModule } from "@angular/material/form-field";
-//import { MatIcon } from "@angular/material/icon";
 
 import { ACCOUNT_API_URL, IDENTITY_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
@@ -25,6 +24,7 @@ import { SharedService } from './services/shared.service';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { AccountDeatilsComponent } from './components/accounts/account-deatils/account-deatils.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -37,6 +37,7 @@ export function tokenGetter(){
     AccountComponent,
     LoginComponent,
     RegistrationComponent,
+    AccountDeatilsComponent,
   ],
   exports: [
     AccountsComponent,
@@ -55,7 +56,6 @@ export function tokenGetter(){
     MatFormFieldModule,
     MatSortModule,
     MatPaginatorModule,
-    //MatIcon,
 
     ReactiveFormsModule,
 
