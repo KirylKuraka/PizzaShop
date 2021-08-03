@@ -6,6 +6,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { tap } from "rxjs/operators";
 import { IDENTITY_API_URL } from '../app-injection-tokens';
+import { UserForRegistrationDTO } from '../models/userForRegistrationDTO';
+import { RegistrationResponseDTO } from '../models/registrationResponseDTO';
 
 export const ACCESS_TOKEN_KEY = 'account_access_token'
 
@@ -47,6 +49,9 @@ export class AuthService {
     this.router.navigate(['']);
   }
   
+  registration(user: UserForRegistrationDTO) {
+    return this.http.post<RegistrationResponseDTO> (`${this.apiURL}authentication`, user);
+  }
 }
 
 

@@ -2,30 +2,11 @@
   <!--Navigation-->
   <div class="topnav">
     <a [routerLink]="['']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">Home</a>
-    <a [routerLink]="['/accounts']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='isLoggedIn'>Accounts</a>
+    <a [routerLink]="['/accounts']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='isLoggedIn && isAdmin'>Accounts</a>
     <a class="personal-account" [routerLink]="['/presonalAccount']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='isLoggedIn'>Personal Account</a>
+    <a class="registration" [routerLink]="['/registration']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='!isLoggedIn'>Sign up</a>
+    <a class="login" [routerLink]="['/login']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='!isLoggedIn'>Sign in</a>
   </div>
-
-  <!--Authentication form-->
-  <div id="center-block">
-    <mat-card *ngIf='!isLoggedIn'>
-      <div class="login-div">
-        <mat-form-field class="example-from-field">
-          <mat-label>Username</mat-label>
-          <input type="text" matInput placeholder="username" #username>
-        </mat-form-field>
-        <mat-form-field class="example-from-field">
-          <mat-label>Password</mat-label>
-          <input type="password" matInput placeholder="password" #password>
-        </mat-form-field>
-        <button mat-flat-button color="primary" (click)='login(username.value, password.value)'>Login</button>
-      </div>
-    </mat-card>
-  </div>
-
-  <!-- <mat-card *ngIf='isLoggedIn'>
-    <button mat-flat-button color="primary" (click)='logout()'>Logout</button>
-  </mat-card> -->
 
   <router-outlet></router-outlet>
 </div>

@@ -5,5 +5,6 @@ export class Account{
     public userName!: string;
     public email!: string;
     public phoneNumber!: string;
-    public promotionalPoins!: number;          
+    public promotionalPoins!: number;        
+    public role!: string;  
 }

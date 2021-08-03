@@ -39,6 +39,44 @@
                 color: white;
             }
     }
+
+    .login{
+        float: right;
+        color: chartreuse;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 18px;
+    
+            &:hover{
+                background-color: white;
+                color: black;
+            }
+    
+            &:active{
+                background-color: coral;
+                color: white;
+            }
+    }
+
+    .registration{
+        float: right;
+        color: chartreuse;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 18px;
+    
+            &:hover{
+                background-color: white;
+                color: black;
+            }
+    
+            &:active{
+                background-color: coral;
+                color: white;
+            }
+    }
 }
 
 .example-from-field {

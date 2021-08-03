@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Account } from './models/account';
+import { AccountService } from './services/account.service';
 import { AuthService } from "./services/auth.service";
 
 @Component({
@@ -13,20 +15,10 @@ export class AppComponent {
     return this.as.isAuthenticated();
   }
 
-  constructor(private as: AuthService){
-
+  public get isAdmin(): boolean {
+    return localStorage.getItem("isAdmin") == "true";
   }
+  constructor(private as: AuthService, private accountService: AccountService){
 
-  login(username: string, password: string){
-    this.as.login(username, password)
-      .subscribe(res => {
-
-      }, err => {
-        console.log('Wrong login or password')
-      })
-  }
-
-  logout() {
-    this.as.logout()
   }
 }

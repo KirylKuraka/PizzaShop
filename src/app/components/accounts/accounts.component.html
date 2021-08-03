@@ -1,49 +1,92 @@
 <mat-card>
     <span class="list-title">Accounts</span>
-    <mat-table [dataSource]="accounts">
+
+    <div class="filter-div-center">
+        <mat-form-field>
+          <input matInput type="text" (keyup)="doFilter($event)" placeholder="Filter">
+        </mat-form-field>
+    </div>
+
+    <mat-table [dataSource]="dataSource" matSort matSortStar="asc">
         <!--ID-->
         <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.userID}}</mat-cell>
         </ng-container>
 
         <!--First Name-->
         <ng-container matColumnDef="firstName">
-            <mat-header-cell *matHeaderCellDef>First Name</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.firstName}}</mat-cell>
         </ng-container>
 
         <!--Last Name-->
         <ng-container matColumnDef="lastName">
-            <mat-header-cell *matHeaderCellDef>Last Name</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.lastName}}</mat-cell>
         </ng-container>
 
         <!--Username-->
         <ng-container matColumnDef="userName">
-            <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.userName}}</mat-cell>
         </ng-container>
 
         <!--Email-->
         <ng-container matColumnDef="email">
-            <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.email}}</mat-cell>
         </ng-container>
 
         <!--Phone-->
         <ng-container matColumnDef="phone">
-            <mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Phone</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.phoneNumber}}</mat-cell>
         </ng-container>
 
         <!--PPoints-->
         <ng-container matColumnDef="pPoints">
-            <mat-header-cell *matHeaderCellDef>PPoints</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>PPoints</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.promotionalPoins}}</mat-cell>
+        </ng-container>
+
+        <!--Role-->
+        <ng-container matColumnDef="role">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+            <mat-cell *matCellDef="let account">{{account.role}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="details">
+            <mat-header-cell *matHeaderCellDef> Details </mat-header-cell>
+            <mat-cell *matCellDef="let account">
+                <button mat-icon-button color="primary" (click)="redirectToDetails(account.userID)">
+                  <!-- <mat-icon class="mat-18">reorder</mat-icon> -->
+                 </button>
+            </mat-cell>
+          </ng-container>
+
+        <ng-container matColumnDef="update">
+            <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
+            <mat-cell *matCellDef="let account">
+                <button mat-icon-button color="accent" (click)="redirectToUpdate(account.userID)">
+                <!-- <mat-icon class="mat-18">system_update</mat-icon> -->
+                 </button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+            <mat-cell *matCellDef="let account">
+                <button mat-icon-button color="warn" (click)="redirectToDelete(account.userID)">
+                    <!-- <mat-icon class="mat-18">delete</mat-icon> -->
+                </button>
+            </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: columns;"></mat-row>
     </mat-table>
+
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons>
+    </mat-paginator>
 </mat-card>

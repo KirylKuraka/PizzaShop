@@ -13,6 +13,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatFormFieldModule } from "@angular/material/form-field";
+//import { MatIcon } from "@angular/material/icon";
 
 import { ACCOUNT_API_URL, IDENTITY_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
@@ -20,6 +21,10 @@ import { JwtModule } from "@auth0/angular-jwt";
 import { ACCESS_TOKEN_KEY } from "./services/auth.service";
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { AccountComponent } from './components/account/account.component';
+import { SharedService } from './services/shared.service';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -30,10 +35,12 @@ export function tokenGetter(){
     AppComponent,
     AccountsComponent,
     AccountComponent,
+    LoginComponent,
+    RegistrationComponent,
   ],
   exports: [
     AccountsComponent,
-    AccountComponent
+    AccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,6 +55,9 @@ export function tokenGetter(){
     MatFormFieldModule,
     MatSortModule,
     MatPaginatorModule,
+    //MatIcon,
+
+    ReactiveFormsModule,
 
     JwtModule.forRoot({
       config: {
@@ -55,7 +65,9 @@ export function tokenGetter(){
       }
     })
   ],
-  providers: [{
+  providers: [
+    SharedService,
+  {
     provide: IDENTITY_API_URL,
     useValue: environment.identityAPI
   },
@@ -63,6 +75,6 @@ export function tokenGetter(){
     provide: ACCOUNT_API_URL,
     useValue: environment.accountAPI
   }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
