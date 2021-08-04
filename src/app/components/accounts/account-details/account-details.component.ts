@@ -4,17 +4,17 @@ import { Account } from 'src/app/models/account';
 import { AccountService } from 'src/app/services/account.service';
 
 @Component({
-  selector: 'app-account-deatils',
-  templateUrl: './account-deatils.component.html',
-  styleUrls: ['./account-deatils.component.scss']
+  selector: 'app-account-details',
+  templateUrl: './account-details.component.html',
+  styleUrls: ['./account-details.component.scss']
 })
-export class AccountDeatilsComponent implements OnInit {
+export class AccountDetailsComponent implements OnInit {
   account!: Account;
 
   constructor(private accountService: AccountService, private router: Router) { }
 
   ngOnInit(): void {
-    let id = localStorage.getItem("accountDetailsID")
+    let id = localStorage.getItem("id")
     if (id != null) {
       this.accountService.getAccountById(id)
         .subscribe(res => {

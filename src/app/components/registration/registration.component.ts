@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserForRegistrationDTO } from 'src/app/models/userForRegistrationDTO';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,12 +18,20 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit(): void {
     this.registrationForm = new FormGroup({
-      userName: new FormControl(''),
-      email: new FormControl(''),
-      password: new FormControl(''),
-      passwordConfirm: new FormControl(''),
-      phoneNumber: new FormControl('')
+      userName: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
+      passwordConfirm: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('', [Validators.required])
     })
+  }
+
+  public validateControl = (controlName: string) => {
+    return this.registrationForm.controls[controlName].invalid && this.registrationForm.controls[controlName].touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.registrationForm.controls[controlName].hasError(errorName)
   }
 
   public registrate = (registerFormValue: any) => {
@@ -39,14 +47,14 @@ export class RegistrationComponent implements OnInit {
 
     console.log(user);
 
-    if (user.password == formValues.passwordConfirm) {
+    if (this.matchPasswords(user.password, formValues.passwordConfirm)) {
       this.as.registration(user)
       .subscribe(res => {
         console.log("Succesful registration")
         this.navigateToLogin();
       },
       err => {
-        alert("There was a problem during registration. \nCheck the entered data.")
+        alert("There was a problem during registration. \nThe username " + user.userName + " is already in use.")
       })
     }
     else {
@@ -57,5 +65,9 @@ export class RegistrationComponent implements OnInit {
 
   navigateToLogin(): void{
     this.router.navigateByUrl('/login');
+  }
+
+  matchPasswords(password: string, passwordConfigrm: string): boolean {
+    return password == passwordConfigrm ? true : false
   }
 }
