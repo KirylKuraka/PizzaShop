@@ -6,12 +6,6 @@
     </div>
 
     <mat-table [dataSource]="dataSource" matSort matSortStart="asc">
-        <!--ID-->
-        <!-- <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-            <mat-cell *matCellDef="let account">{{account.userID}}</mat-cell>
-        </ng-container> -->
-
         <!--First Name-->
         <ng-container matColumnDef="firstName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
@@ -49,7 +43,7 @@
         </ng-container>
 
         <!--Role-->
-        <ng-container matColumnDef="role">
+        <ng-container *ngIf="true" matColumnDef="role">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.role}}</mat-cell>
         </ng-container>
@@ -66,7 +60,7 @@
         <ng-container matColumnDef="update">
             <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
             <mat-cell *matCellDef="let account">
-                <button mat-icon-button color="accent" (click)="redirectToUpdate(account.userID)">
+                <button mat-icon-button color="accent" (click)="redirectToUpdate(account)">
                     <img class="image-icon" src="../../../assets/edit_icon.ico">
                  </button>
             </mat-cell>
@@ -89,13 +83,14 @@
     </mat-paginator>
 </mat-card>
 
-<mat-card>
+<mat-card *ngIf="showFlag">
     <mat-form-field appearance="fill">
-        <mat-label>Toppings</mat-label>
-        <mat-select [formControl]="roles" multiple [(value)]="selectedRole">
+        <mat-label>Roles</mat-label>
+        <mat-select [formControl]="rolesSelect" multiple [(value)]="selectedRole">
           <mat-option *ngFor="let role of rolesList" [value]="role">{{role}}</mat-option>
         </mat-select>
     </mat-form-field>
+    <button class="save-changes-btn" mat-flat-button color="primary" (click)="saveChanges()">Сохранить</button>
     <mat-card>
         {{selectedRole}}
     </mat-card>

@@ -13,12 +13,14 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./accounts.component.scss']
 })
 export class AccountsComponent implements OnInit, AfterViewInit {
-  roles = new FormControl();
+  rolesSelect = new FormControl();
   rolesList: string[] = ['Admin', 'Customer'];
-  selectedRole = "Customer"
+  selectedRole = ['']
+
+  account!: Account;
+  public showFlag: boolean = false;
   
   public dataSource = new MatTableDataSource<Account>();
-  //columns = ['id', 'firstName', 'lastName', 'userName', 'email', 'phone', 'pPoints', 'role', 'details', 'update', 'delete']
   columns = ['firstName', 'lastName', 'userName', 'email', 'phone', 'pPoints', 'role', 'details', 'update', 'delete']
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -43,8 +45,38 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   }
 
-  public redirectToUpdate = (id: string) =>{
-  
+  public redirectToUpdate = (_account: Account) =>{
+    this.account = _account;
+    this.selectedRole = this.account.role.split(" - ");
+    this.rolesSelect.setValue(this.selectedRole)
+
+    this.showFlag = true;
+  }
+
+  public saveChanges = () => {
+    if (confirm("Сохранить внесенные изменения?")) {
+      if (this.selectedRole.length != 0) {
+        this.account.role = this.selectedRole.join(" - ");
+      }
+      else {
+        this.account.role = "Customer";
+      }
+
+      let index = this.dataSource.data.findIndex((item) => {
+        return item.userID == this.account.userID
+      })
+
+      this.dataSource.data[index] = this.account;
+      this.accountService.updateAccountById(this.account.userID, this.account)
+        .subscribe(res => {
+          console.log(res)
+        })
+      
+        this.showFlag = false;
+    }
+    else{
+      this.showFlag = false;
+    }
   }
 
   public redirectToDelete = (id: string) => {
