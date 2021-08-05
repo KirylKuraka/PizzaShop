@@ -10,6 +10,7 @@ import { UserForRegistrationDTO } from '../models/userForRegistrationDTO';
 import { RegistrationResponseDTO } from '../models/registrationResponseDTO';
 
 export const ACCESS_TOKEN_KEY = 'account_access_token'
+export const REFRESH_TOKEN_KEY = 'account_refresh_token'
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +30,10 @@ export class AuthService {
     }).pipe(
       tap(token => {
         console.log(token.token)
+        console.log(token.refreshToken);
+        
         localStorage.setItem(ACCESS_TOKEN_KEY, token.token)
+        localStorage.setItem(REFRESH_TOKEN_KEY, token.refreshToken)
       })
     )
   }
@@ -46,6 +50,7 @@ export class AuthService {
 
   logout(): void{
     localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem(REFRESH_TOKEN_KEY);
     this.router.navigate(['']);
   }
   

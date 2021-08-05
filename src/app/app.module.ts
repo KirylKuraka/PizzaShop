@@ -15,7 +15,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from '@angular/material/select';
 
-import { ACCOUNT_API_URL, IDENTITY_API_URL } from './app-injection-tokens';
+import { ACCOUNT_API_URL, IDENTITY_API_URL, PRODUCT_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
 import { JwtModule } from "@auth0/angular-jwt";
 import { ACCESS_TOKEN_KEY } from "./services/auth.service";
@@ -26,6 +26,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { AccountDetailsComponent } from './components/accounts/account-details/account-details.component';
+import { HomeComponent } from './components/home/home.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -34,6 +35,7 @@ export function tokenGetter(){
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
     AccountsComponent,
     AccountComponent,
     LoginComponent,
@@ -76,6 +78,10 @@ export function tokenGetter(){
   {
     provide: ACCOUNT_API_URL,
     useValue: environment.accountAPI
+  },
+  {
+    provide: PRODUCT_API_URL,
+    useValue: environment.productAPI
   }],
   bootstrap: [AppComponent],
 })

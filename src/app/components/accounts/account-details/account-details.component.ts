@@ -9,7 +9,7 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./account-details.component.scss']
 })
 export class AccountDetailsComponent implements OnInit {
-  account!: Account;
+  account: Account = new Account();
 
   constructor(private accountService: AccountService, private router: Router) { }
 
