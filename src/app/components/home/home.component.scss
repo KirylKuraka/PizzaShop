@@ -84,4 +84,11 @@ form button {
     outline: 0;
     margin-bottom: 15px;
     width: 150px;
+    font-size: 18px;
+}
+
+form button:hover{
+    background: #b7f385;
+    border: 1px solid #b7f385;
+    color: #fff;
 }
