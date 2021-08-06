@@ -11,18 +11,36 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class AccountComponent implements OnInit {
   account!: Account;
-  
-  constructor(private as: AuthService) { }
+  isEditAccount: boolean = false;
+  constructor(private as: AuthService, private accountService: AccountService) { }
 
   ngOnInit(): void {
     let accountString = localStorage.getItem("account");
     if (accountString != null) {
       this.account = Account.recoverAccount(accountString);
-      console.log(this.account);
     }
   }
 
   logout() {
       this.as.logout()
     }
+  
+  changeStateEditAccount() {
+    this.isEditAccount = !this.isEditAccount;
+  }
+
+  saveChanges(firstName: string, lastName: string, username: string, email: string, phone: string){
+    this.account.firstName = firstName;
+    this.account.lastName = lastName;
+    this.account.userName = username;
+    this.account.email = email;
+    this.account.phoneNumber = phone;
+
+    console.log(this.account)
+
+    this.accountService.updateAccountById(this.account.userID, this.account) 
+      .subscribe(res => {
+      })
+    this.changeStateEditAccount();
+  }
 }

@@ -1,0 +1,72 @@
+<mat-card>
+    <div class="filter-div-center">
+        <mat-form-field>
+          <input matInput type="text" (keyup)="doFilter($event)" placeholder="Filter">
+        </mat-form-field>
+    </div>
+
+    <mat-table [dataSource]="dataSource" matSort matSortStart="asc">
+        <!--First Name-->
+        <ng-container matColumnDef="productTypeName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+            <mat-cell *matCellDef="let product">{{product.productType.productTypeName}}</mat-cell>
+        </ng-container>
+
+        <!--Last Name-->
+        <ng-container matColumnDef="productName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let product">{{product.productName}}</mat-cell>
+        </ng-container>
+
+        <!--Username-->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+            <mat-cell *matCellDef="let product">{{product.description}}</mat-cell>
+        </ng-container>
+
+        <!--Email-->
+        <ng-container matColumnDef="cost">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Cost</mat-header-cell>
+            <mat-cell *matCellDef="let product">{{product.cost}}</mat-cell>
+        </ng-container>
+
+        <!--Phone-->
+        <ng-container matColumnDef="promotionalPointsCost">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>PPoints</mat-header-cell>
+            <mat-cell *matCellDef="let product">{{product.promotionalPointsCost}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="details">
+            <mat-header-cell *matHeaderCellDef> Details </mat-header-cell>
+            <mat-cell *matCellDef="let product">
+                <button mat-icon-button color="primary" (click)="redirectToDetails(product.productID)">
+                    <img class="image-icon" src="../../../assets/details_icon.ico">
+              </button>
+            </mat-cell>
+          </ng-container>
+
+        <ng-container matColumnDef="update">
+            <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
+            <mat-cell *matCellDef="let product">
+                <button mat-icon-button color="accent" (click)="redirectToUpdate(product.productID, product)">
+                    <img class="image-icon" src="../../../assets/edit_icon.ico">
+                 </button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+            <mat-cell *matCellDef="let product">
+                <button class="delete-btn" mat-icon-button color="warn" (click)="redirectToDelete(product.productID)">
+                    <img class="image-icon" src="../../../assets/delete_icon.ico">
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 15, 20, 30, 40, 50]" showFirstLastButtons>
+    </mat-paginator>
+</mat-card>

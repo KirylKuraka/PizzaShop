@@ -1,34 +1,65 @@
 <!-- *ngIf='isHaveData' -->
 <div id="account-div">
     <mat-card>
-        <span class="list-title">Personal account</span>
-        
+        <div class="edit-button-div">
+            <span class="list-title">Personal account</span>
+            <button *ngIf="!isEditAccount" mat-flat-button color="warn" class="edit-button" (click)='changeStateEditAccount()'>Edit account</button>
+        </div>
         <mat-card>
             <mat-label>ID: {{account.userID}}</mat-label>
         </mat-card>
-        <mat-card>
-            <label>First Name: {{account.firstName}}</label>
-        </mat-card>
-        <mat-card>
-            <label>Last Name: {{account.lastName}}</label>
-        </mat-card>
-        <mat-card>
-            <label>Username: {{account.userName}}</label>
-        </mat-card>
-        <mat-card>
-            <label>Email: {{account.email}}</label>
-        </mat-card>
-        <mat-card>
-            <label>Phone: {{account.phoneNumber}}</label>
-        </mat-card>
-        <mat-card>
-            <label>PPoints: {{account.promotionalPoins}}</label>
-        </mat-card>
-        <mat-card>
-            <label>Role: {{account.role}}</label>
-        </mat-card>
-    
-        <div class="logout-button-div">
+
+        <div *ngIf="!isEditAccount">
+            <mat-card>
+                <label>First Name: {{account.firstName}}</label>
+            </mat-card>
+            <mat-card>
+                <label>Last Name: {{account.lastName}}</label>
+            </mat-card>
+            <mat-card>
+                <label>Username: {{account.userName}}</label>
+            </mat-card>
+            <mat-card>
+                <label>Email: {{account.email}}</label>
+            </mat-card>
+            <mat-card>
+                <label>Phone: {{account.phoneNumber}}</label>
+            </mat-card> 
+            <mat-card>
+                <label>PPoints: {{account.promotionalPoins}}</label>
+            </mat-card>
+            <mat-card>
+                <label>Role: {{account.role}}</label>
+            </mat-card>
+        </div>
+        
+        <div *ngIf="isEditAccount">
+            <mat-card>
+                <label>First Name:</label>
+                <input type="text" value={{account.firstName}} matInput placeholder="first name" #firstName>
+            </mat-card>
+            <mat-card>
+                <label>Last Name:</label>
+                <input type="text" value={{account.lastName}} matInput placeholder="last name" #lastName>
+            </mat-card>
+            <mat-card>
+                <label>Username:</label>
+                <input type="text" value={{account.userName}} matInput placeholder="username" #username>
+            </mat-card>
+            <mat-card>
+                <label>Email:</label>
+                <input type="email" value={{account.email}} matInput placeholder="example@gmail.com" #email>
+            </mat-card>
+            <mat-card>
+                <label>Phone:</label>
+                <input type="text" value={{account.phoneNumber}} matInput placeholder="+375*********" #phone pattern="^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$">
+            </mat-card>
+            <div class="save-button-div" *ngIf="isEditAccount">
+                <button class="save-button" mat-flat-button color="primary" (click)='saveChanges(firstName.value, lastName.value, username.value, email.value, phone.value)'>Save</button>
+            </div>
+        </div>
+
+        <div class="logout-button-div" *ngIf="!isEditAccount">
             <button class="logout-button" mat-flat-button color="primary" (click)='logout()'>Logout</button>
         </div>
         

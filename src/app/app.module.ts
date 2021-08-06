@@ -27,6 +27,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { ReactiveFormsModule } from "@angular/forms";
 import { AccountDetailsComponent } from './components/accounts/account-details/account-details.component';
 import { HomeComponent } from './components/home/home.component';
+import { ProductsComponent } from './components/products/products.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -41,6 +42,7 @@ export function tokenGetter(){
     LoginComponent,
     RegistrationComponent,
     AccountDetailsComponent,
+    ProductsComponent,
   ],
   exports: [
     AccountsComponent,

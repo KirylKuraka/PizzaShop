@@ -1,28 +1,47 @@
 <div id="products-div">
-    <!-- <div class="title-block">Пиццы</div>
+    <div class="title-block">Пиццы</div>
     <div class="wrapper">
-        <div itemscope itemtype="Product" class="cart-box">
+        <div itemscope itemtype="Product" class="cart-box" *ngFor="let pizza of pizzas">
             <img itemprop="image" class="image-icon" src="../../../assets/pizza.png">
-            <h3 itemprop="name">{{pizzas[0].productName}}</h3>
-            <p>Описание: {{pizzas[0].description}}</p>
+            <h3 itemprop="name">{{pizza.productName}}</h3>
+            <p>Описание: {{pizza.description}}</p>
             <form action="something" method="POST">
                 <div class="price-box">
-                    <span>Стоимость: {{pizzas[0].cost}} руб</span>
+                    <span>Стоимость: {{pizza.cost}} руб</span>
                 </div>
                 <button>В корзину</button>
             </form>
         </div>
-        <div itemscope itemtype="Product" class="cart-box">
+    </div>
+
+    <div class="title-block">Напитки</div>
+    <div class="wrapper">
+        <div itemscope itemtype="Product" class="cart-box" *ngFor="let drink of drinks">
             <img itemprop="image" class="image-icon" src="../../../assets/pizza.png">
-            <h3 itemprop="name">{{pizzas[1].productName}}</h3>
-            <p>Состав: {{pizzas[1].description}}</p>
+            <h3 itemprop="name">{{drink.productName}}</h3>
+            <p>Описание: {{drink.description}}</p>
             <form action="something" method="POST">
                 <div class="price-box">
-                    <span>Стоимость: {{pizzas[1].cost}} руб</span>
+                    <span>Стоимость: {{drink.cost}} руб</span>
                 </div>
                 <button>В корзину</button>
             </form>
         </div>
-    </div> -->
+    </div>
+
+    <div class="title-block">Соусы</div>
+    <div class="wrapper">
+        <div itemscope itemtype="Product" class="cart-box" *ngFor="let sauce of sauces">
+            <img itemprop="image" class="image-icon" src="../../../assets/pizza.png">
+            <h3 itemprop="name">{{sauce.productName}}</h3>
+            <p>Описание: {{sauce.description}}</p>
+            <form action="something" method="POST">
+                <div class="price-box">
+                    <span>Стоимость: {{sauce.cost}} руб</span>
+                </div>
+                <button>В корзину</button>
+            </form>
+        </div>
+    </div>
 </div>
 

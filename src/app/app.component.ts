@@ -18,7 +18,7 @@ export class AppComponent {
   public get isAdmin(): boolean {
     return localStorage.getItem("isAdmin") == "true";
   }
-  constructor(private as: AuthService, private accountService: AccountService){
+  constructor(private as: AuthService){
 
   }
 }
