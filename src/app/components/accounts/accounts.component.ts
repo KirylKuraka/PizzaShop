@@ -63,8 +63,8 @@ export class AccountsComponent implements OnInit, AfterViewInit {
 
   openDetailsDialog(account: Account): void{
     const dialogRef = this.dialog.open(AccountDetailsComponent, {
-      width: '600px',
-      height: '476px',
+      width: 'auto',
+      height: 'auto',
       data: {account : account}
     });
 
@@ -74,8 +74,8 @@ export class AccountsComponent implements OnInit, AfterViewInit {
 
   openEditDialog(account: Account): void{
     const dialogRef = this.dialog.open(AccountEditComponent, {
-      width: '600px',
-      height: '600px',
+      width: 'auto',
+      height: 'auto',
       data: {account: account}
     });
 
