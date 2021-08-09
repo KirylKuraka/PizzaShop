@@ -1,11 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+//import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Account } from 'src/app/models/account';
 import { AccountService } from 'src/app/services/account.service';
+//import { AccountDetailsComponent } from './account-details/account-details.component';
 
 @Component({
   selector: 'app-accounts',
@@ -26,7 +28,10 @@ export class AccountsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private accountService: AccountService, private router: Router) { }
+  constructor(private accountService: AccountService, 
+              private router: Router, 
+              //private dialog: MatDialog
+              ) { }
 
   ngOnInit(): void {
     this.accountService.getAccounts()
@@ -69,10 +74,9 @@ export class AccountsComponent implements OnInit, AfterViewInit {
       this.dataSource.data[index] = this.account;
       this.accountService.updateAccountById(this.account.userID, this.account)
         .subscribe(res => {
-          console.log(res)
         })
       
-        this.showFlag = false;
+      this.showFlag = false;
     }
     else{
       this.showFlag = false;
@@ -87,10 +91,21 @@ export class AccountsComponent implements OnInit, AfterViewInit {
 
       this.accountService.deleteAccountById(id)
         .subscribe(res => {
-          console.log(res)
         })
     }
   }
+
+  // openDialog(id: string): void{
+  //   const dialogRef = this.dialog.open(AccountDetailsComponent, {
+  //     width: '600px',
+  //     height: '800px',
+  //     data: {id: id}
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log("Dialog closed");
+  //   })
+  // }
 
   public redirectToDetails = (id: string) => {
       localStorage.setItem('id', id)
@@ -106,5 +121,16 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     }
 
     return (currentAccount?.userID != id && !account.role.includes("Admin")) ? true : false;
+  }
+
+  public canEditCurrentUser = (id: string) => {
+    let currentAccount;
+
+    let storageAccount = localStorage.getItem("account");
+    if (storageAccount != null){
+      currentAccount = Account.recoverAccount(storageAccount);
+    }
+
+    return (currentAccount?.userID != id) ? true : false;
   }
 }

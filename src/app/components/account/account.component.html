@@ -36,26 +36,29 @@
         <div *ngIf="isEditAccount">
             <mat-card>
                 <label>First Name:</label>
-                <input type="text" value={{account.firstName}} matInput placeholder="first name" #firstName>
+                <input class="input-width-max" type="text" value={{account.firstName}} matInput placeholder="first name" #firstName>
             </mat-card>
             <mat-card>
                 <label>Last Name:</label>
-                <input type="text" value={{account.lastName}} matInput placeholder="last name" #lastName>
+                <input class="input-width-max" type="text" value={{account.lastName}} matInput placeholder="last name" #lastName>
             </mat-card>
             <mat-card>
                 <label>Username:</label>
-                <input type="text" value={{account.userName}} matInput placeholder="username" #username>
+                <input class="input-width-max" type="text" value={{account.userName}} matInput placeholder="username" #username>
             </mat-card>
             <mat-card>
                 <label>Email:</label>
-                <input type="email" value={{account.email}} matInput placeholder="example@gmail.com" #email>
+                <input class="input-width-max" type="email" value={{account.email}} matInput placeholder="example@gmail.com" #email>
             </mat-card>
             <mat-card>
                 <label>Phone:</label>
-                <input type="text" value={{account.phoneNumber}} matInput placeholder="+375*********" #phone pattern="^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$">
+                <input class="input-width-max" type="text" value={{account.phoneNumber}} matInput placeholder="+375*********" #phone pattern="^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$">
             </mat-card>
             <div class="save-button-div" *ngIf="isEditAccount">
                 <button class="save-button" mat-flat-button color="primary" (click)='saveChanges(firstName.value, lastName.value, username.value, email.value, phone.value)'>Save</button>
+            </div>
+            <div class="save-button-div" *ngIf="isEditAccount">
+                <button class="save-button" mat-flat-button color="warn" (click)='cancel()'>Cancel</button>
             </div>
         </div>
 

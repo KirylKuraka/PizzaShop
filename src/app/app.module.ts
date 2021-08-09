@@ -14,6 +14,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from '@angular/material/select';
+//import { MatDialog } from "@angular/material/dialog";
 
 import { ACCOUNT_API_URL, IDENTITY_API_URL, PRODUCT_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
@@ -62,6 +63,7 @@ export function tokenGetter(){
     MatSortModule,
     MatPaginatorModule,
     MatSelectModule,
+    //MatDialog,
 
     ReactiveFormsModule,
 

@@ -1,3 +1,17 @@
+<!--Edit user role field-->
+<mat-card *ngIf="showFlag">
+    <mat-label>Username: {{account.userName}}</mat-label>
+    <br>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Roles</mat-label>
+        <mat-select [formControl]="rolesSelect" multiple [(value)]="selectedRole">
+          <mat-option *ngFor="let role of rolesList" [value]="role">{{role}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button class="save-changes-btn" mat-flat-button color="primary" (click)="saveChanges()">Сохранить</button>
+</mat-card>
+
 <mat-card>
     <div class="filter-div-center">
         <mat-form-field>
@@ -53,16 +67,19 @@
             <mat-cell *matCellDef="let account">
                 <button mat-icon-button color="primary" (click)="redirectToDetails(account.userID)">
                     <img class="image-icon" src="../../../assets/details_icon.ico">
-              </button>
+                </button>
+                <!-- <button mat-icon-button color="primary" (click)="openDialog(account.userID)">
+                    <img class="image-icon" src="../../../assets/details_icon.ico">
+                </button> -->
             </mat-cell>
           </ng-container>
 
         <ng-container matColumnDef="update">
             <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
             <mat-cell *matCellDef="let account">
-                <button mat-icon-button color="accent" (click)="redirectToUpdate(account)">
+                <button mat-icon-button color="accent" (click)="redirectToUpdate(account)" *ngIf="canEditCurrentUser(account.userID)">
                     <img class="image-icon" src="../../../assets/edit_icon.ico">
-                 </button>
+                </button>
             </mat-cell>
         </ng-container>
 
@@ -83,12 +100,3 @@
     </mat-paginator>
 </mat-card>
 
-<mat-card *ngIf="showFlag">
-    <mat-form-field appearance="fill">
-        <mat-label>Roles</mat-label>
-        <mat-select [formControl]="rolesSelect" multiple [(value)]="selectedRole">
-          <mat-option *ngFor="let role of rolesList" [value]="role">{{role}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <button class="save-changes-btn" mat-flat-button color="primary" (click)="saveChanges()">Сохранить</button>
-</mat-card>

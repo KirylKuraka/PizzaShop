@@ -43,4 +43,8 @@ export class AccountComponent implements OnInit {
       })
     this.changeStateEditAccount();
   }
+
+  cancel(){
+    this.changeStateEditAccount();
+  }
 }
