@@ -14,7 +14,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSelectModule } from '@angular/material/select';
-//import { MatDialog } from "@angular/material/dialog";
+import { MatDialogModule } from "@angular/material/dialog";
 
 import { ACCOUNT_API_URL, IDENTITY_API_URL, PRODUCT_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
@@ -29,6 +29,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AccountDetailsComponent } from './components/accounts/account-details/account-details.component';
 import { HomeComponent } from './components/home/home.component';
 import { ProductsComponent } from './components/products/products.component';
+import { AccountEditComponent } from './components/accounts/account-edit/account-edit.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -44,6 +45,7 @@ export function tokenGetter(){
     RegistrationComponent,
     AccountDetailsComponent,
     ProductsComponent,
+    AccountEditComponent,
   ],
   exports: [
     AccountsComponent,
@@ -63,7 +65,7 @@ export function tokenGetter(){
     MatSortModule,
     MatPaginatorModule,
     MatSelectModule,
-    //MatDialog,
+    MatDialogModule,
 
     ReactiveFormsModule,
 

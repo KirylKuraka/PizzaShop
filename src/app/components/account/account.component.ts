@@ -36,8 +36,6 @@ export class AccountComponent implements OnInit {
     this.account.email = email;
     this.account.phoneNumber = phone;
 
-    console.log(this.account)
-
     this.accountService.updateAccountById(this.account.userID, this.account) 
       .subscribe(res => {
       })

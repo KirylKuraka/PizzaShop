@@ -1,9 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-//import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Account } from 'src/app/models/account';
-//import { DialogData } from 'src/app/models/dialogData';
-import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-account-details',
@@ -13,27 +10,15 @@ import { AccountService } from 'src/app/services/account.service';
 export class AccountDetailsComponent implements OnInit {
   account: Account = new Account();
 
-  constructor(private accountService: AccountService, 
-              private router: Router, 
-              //private dilogRef: MatDialogRef<AccountDetailsComponent>,
-              //@Inject(MAT_DIALOG_DATA) private data: DialogData
+  constructor(private dilogRef: MatDialogRef<AccountDetailsComponent>,
+              @Inject(MAT_DIALOG_DATA) private data: {account: Account}
               ) { }
 
   ngOnInit(): void {
-    let id = localStorage.getItem("id")
-    if (id != null) {
-      this.accountService.getAccountById(id)
-        .subscribe(res => {
-          this.account = res
-        })
-    }
+    this.account = this.data.account
   }
 
-  goBack(){
-    this.router.navigateByUrl('accounts')
+  onNoClick(): void {
+    this.dilogRef.close();
   }
-
-  // onNoClick(): void {
-  //   this.dilogRef.close();
-  // }
 }

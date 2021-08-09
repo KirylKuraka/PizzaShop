@@ -1,13 +1,13 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-//import { MatDialog } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { Account } from 'src/app/models/account';
 import { AccountService } from 'src/app/services/account.service';
-//import { AccountDetailsComponent } from './account-details/account-details.component';
+import { AccountDetailsComponent } from './account-details/account-details.component';
+import { AccountEditComponent } from './account-edit/account-edit.component';
 
 @Component({
   selector: 'app-accounts',
@@ -28,9 +28,8 @@ export class AccountsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private accountService: AccountService, 
-              private router: Router, 
-              //private dialog: MatDialog
+  constructor(private accountService: AccountService,
+              private dialog: MatDialog
               ) { }
 
   ngOnInit(): void {
@@ -50,39 +49,6 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   }
 
-  public redirectToUpdate = (_account: Account) =>{
-    this.account = _account;
-    this.selectedRole = this.account.role.split(" - ");
-    this.rolesSelect.setValue(this.selectedRole)
-
-    this.showFlag = true;
-  }
-
-  public saveChanges = () => {
-    if (confirm("Сохранить внесенные изменения?")) {
-      if (this.selectedRole.length != 0) {
-        this.account.role = this.selectedRole.join(" - ");
-      }
-      else {
-        this.account.role = "Customer";
-      }
-
-      let index = this.dataSource.data.findIndex((item) => {
-        return item.userID == this.account.userID
-      })
-
-      this.dataSource.data[index] = this.account;
-      this.accountService.updateAccountById(this.account.userID, this.account)
-        .subscribe(res => {
-        })
-      
-      this.showFlag = false;
-    }
-    else{
-      this.showFlag = false;
-    }
-  }
-
   public redirectToDelete = (id: string) => {
     if (confirm("Вы уверены, что хотите удалить выбранную запись?")) {
       this.dataSource.data = this.dataSource.data.filter((item) => {
@@ -95,21 +61,36 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // openDialog(id: string): void{
-  //   const dialogRef = this.dialog.open(AccountDetailsComponent, {
-  //     width: '600px',
-  //     height: '800px',
-  //     data: {id: id}
-  //   });
+  openDetailsDialog(account: Account): void{
+    const dialogRef = this.dialog.open(AccountDetailsComponent, {
+      width: '600px',
+      height: '476px',
+      data: {account : account}
+    });
 
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log("Dialog closed");
-  //   })
-  // }
+    dialogRef.afterClosed().subscribe(result => {
+    })
+  }
 
-  public redirectToDetails = (id: string) => {
-      localStorage.setItem('id', id)
-      this.router.navigateByUrl('accounts/details')
+  openEditDialog(account: Account): void{
+    const dialogRef = this.dialog.open(AccountEditComponent, {
+      width: '600px',
+      height: '600px',
+      data: {account: account}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        let index = this.dataSource.data.findIndex((item) => {
+          return item.userID == result.account.userID
+        })
+  
+        this.dataSource.data[index] = result.account;
+        this.accountService.updateAccountById(result.account.userID, result.account)
+          .subscribe(res => {
+          })
+      }
+    })
   }
 
   public canDelete(id: string, account: Account): boolean {

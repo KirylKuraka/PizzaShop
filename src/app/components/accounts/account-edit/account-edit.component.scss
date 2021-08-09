@@ -12,7 +12,18 @@
     font-weight: bold;
 }
 
+.back-button{
+    text-decoration: solid;
+    font-size: 16px;
+}
+
 .div-info{
     padding-top: 20px;
     font-size: 20px;
+}
+
+.save-button-div{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
 }
