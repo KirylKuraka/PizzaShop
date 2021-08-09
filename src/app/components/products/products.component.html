@@ -39,16 +39,19 @@
         <ng-container matColumnDef="details">
             <mat-header-cell *matHeaderCellDef> Details </mat-header-cell>
             <mat-cell *matCellDef="let product">
-                <button mat-icon-button color="primary" (click)="redirectToDetails(product.productID)">
-                    <img class="image-icon" src="../../../assets/details_icon.ico">
-              </button>
+              <button mat-icon-button color="primary" (click)="openDetailsDialog(product)">
+                <img class="image-icon" src="../../../assets/details_icon.ico">
+          </button>
             </mat-cell>
           </ng-container>
 
         <ng-container matColumnDef="update">
             <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
             <mat-cell *matCellDef="let product">
-                <button mat-icon-button color="accent" (click)="redirectToUpdate(product.productID, product)">
+                <!-- <button mat-icon-button color="accent" (click)="redirectToUpdate(product.productID, product)">
+                    <img class="image-icon" src="../../../assets/edit_icon.ico">
+                 </button> -->
+                 <button mat-icon-button color="accent" (click)="openEditDialog(product)">
                     <img class="image-icon" src="../../../assets/edit_icon.ico">
                  </button>
             </mat-cell>

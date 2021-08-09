@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 @Component({
   selector: 'app-products',
@@ -18,7 +20,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(private productService: ProductService,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.productService.getProducts()
@@ -45,19 +48,39 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
       this.productService.deleteProductById(id)
         .subscribe(res => {
-          console.log(res)
         })
     }
   }
 
-  public redirectToDetails = (id: string) => {
-      localStorage.setItem('id', id)
-      console.log(localStorage.getItem('id'));
-      this.productService.getProductById(id).subscribe(res => {console.log(res)})
+  openDetailsDialog(product: Product): void{
+    const dialogRef = this.dialog.open(ProductDetailsComponent, {
+      width: 'auto',
+      height: 'auto',
+      data: {product : product}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+    })
   }
 
-  public redirectToUpdate = (id: string, product: Product) => {
+  openEditDialog(product: Product): void {
+    const dialogRef = this.dialog.open(ProductDetailsComponent, {
+      width: 'auto',
+      height: 'auto',
+      data: {product : product}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        let index = this.dataSource.data.findIndex((item) => {
+          return item.productID == result.product.productID
+        })
+
+        this.dataSource.data[index] = result.product;
+        this.productService.updateProductById(result.product.productID, result.product)
+          .subscribe(res => {      
+          })
+      }
+    })
   }
 }
