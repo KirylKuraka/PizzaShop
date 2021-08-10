@@ -1,6 +1,6 @@
 #center-block{
     margin: 0 auto;
-    width: 25%;
+    width: 30%;
 }
 
 .card-title{
@@ -22,4 +22,9 @@
     width: auto;
     padding: 0;
     border-top-width: 0;
+}
+
+.error-div {
+    color: red;
+    font-size: 14px;
 }

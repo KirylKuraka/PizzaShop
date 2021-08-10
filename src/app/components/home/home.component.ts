@@ -18,19 +18,16 @@ export class HomeComponent implements OnInit {
     this.productService.getProductsWithFilter("Пицца")
       .subscribe(res => {
         this.pizzas = res as Product[];
-        console.log(this.pizzas);
       })
     
     this.productService.getProductsWithFilter("Напиток")
       .subscribe(res => {
         this.drinks = res as Product[];
-        console.log(this.drinks);
       })
 
     this.productService.getProductsWithFilter("Соус")
       .subscribe(res => {
         this.sauces = res as Product[];
-        console.log(this.sauces);
       })
   }
 }

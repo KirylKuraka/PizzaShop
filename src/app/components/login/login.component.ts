@@ -26,27 +26,20 @@ export class LoginComponent{
         .subscribe(res => {
           let account = res as Account;
 
+          let role = localStorage.getItem("currentUserRole")
+          if (role != null) {
+            account.role = role
+          }
+           
           localStorage.setItem("account", Account.convertAccountToString(account));
-
-          if (account.role.includes("Admin")) {
-            alert("You're authorized as Admin")
-            localStorage.setItem("isAdmin", "true")
-          }
-          else {
-            localStorage.setItem("isAdmin", "false")
-          }
+          localStorage.setItem("currentAccountName", account.userName)
           
           this.navigateToHome();
-          console.log(account);
         })
       }, err => {
         alert('Wrong login or password');
-        console.log('Wrong login or password')
+        console.error('Wrong login or password')
       })
-  }
-
-  logout() {
-    this.as.logout()
   }
 
   navigateToHome(): void{

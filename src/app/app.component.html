@@ -1,10 +1,10 @@
 <div>
   <!--Navigation-->
-  <div class="topnav">
+  <div [ngClass]="{'topnav-admin' : isAdmin == true, 'topnav': isAdmin == false }">
     <a [routerLink]="['']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">Pizza Shop</a>
     <a [routerLink]="['/accounts']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='isLoggedIn && isAdmin'>Accounts</a>
     <a [routerLink]="['/products']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='isLoggedIn && isAdmin'>Products</a>
-    <a class="personal-account" [routerLink]="['/presonalAccount']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='isLoggedIn'>Personal Account</a>
+    <a class="personal-account" [routerLink]="['/presonalAccount']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='isLoggedIn'>{{AccountName}}</a>
     <a class="registration" [routerLink]="['/registration']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='!isLoggedIn'>Sign up</a>
     <a class="login" [routerLink]="['/login']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}" *ngIf='!isLoggedIn'>Sign in</a>
   </div>

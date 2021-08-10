@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { Account } from './models/account';
 import { AccountService } from './services/account.service';
 import { AuthService } from "./services/auth.service";
@@ -8,7 +8,7 @@ import { AuthService } from "./services/auth.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent{
   title = 'PizzaShop';
 
   public get isLoggedIn(): boolean{
@@ -19,6 +19,10 @@ export class AppComponent {
     return localStorage.getItem("isAdmin") == "true";
   }
   constructor(private as: AuthService){
+  }
 
+  public get AccountName(): string {
+    let name = localStorage.getItem("currentAccountName");
+    return name != null ? `Hello, ${name}` : "";
   }
 }

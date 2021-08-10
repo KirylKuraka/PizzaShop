@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Token } from '../models/token';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { tap } from "rxjs/operators";
 import { IDENTITY_API_URL } from '../app-injection-tokens';
 import { UserForRegistrationDTO } from '../models/userForRegistrationDTO';
 import { RegistrationResponseDTO } from '../models/registrationResponseDTO';
+import { Role } from '../models/role';
 
 export const ACCESS_TOKEN_KEY = 'account_access_token'
 export const REFRESH_TOKEN_KEY = 'account_refresh_token'
@@ -34,6 +35,19 @@ export class AuthService {
         
         localStorage.setItem(ACCESS_TOKEN_KEY, token.token)
         localStorage.setItem(REFRESH_TOKEN_KEY, token.refreshToken)
+
+        let jwtData = token.token.split('.')[1];
+        let decodedJwtJsonData = window.atob(jwtData);
+        let decodedJwtData = JSON.parse(decodedJwtJsonData);
+
+        if(typeof(decodedJwtData.role) == "string"){
+          localStorage.setItem("currentUserRole", decodedJwtData.role)
+        }
+        else{
+          localStorage.setItem("currentUserRole", decodedJwtData.role.sort().join(" - "))
+        }
+
+        localStorage.setItem("isAdmin", decodedJwtData.isAdmin)
       })
     )
   }
@@ -51,11 +65,17 @@ export class AuthService {
   logout(): void{
     localStorage.removeItem(ACCESS_TOKEN_KEY);
     localStorage.removeItem(REFRESH_TOKEN_KEY);
+    localStorage.setItem("isAdmin", "false")
+    localStorage.setItem("currentUserRole", "")
     this.router.navigate(['']);
   }
   
   registration(user: UserForRegistrationDTO) {
     return this.http.post<RegistrationResponseDTO> (`${this.apiURL}authentication`, user);
+  }
+
+  getUserRoleById(id: string): Observable<Role>{
+    return this.http.get<Role>(`${this.apiURL}authentication/${id}`, {headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY))})
   }
 }
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserForRegistrationDTO } from 'src/app/models/userForRegistrationDTO';
@@ -10,6 +10,9 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
+  notUnique: boolean = false;
+  @ViewChild('userName')usernameInput!: ElementRef;
+
   public registrationForm!: FormGroup;
 
   constructor(private as: AuthService, private router: Router) {
@@ -45,7 +48,6 @@ export class RegistrationComponent implements OnInit {
       roles: ['Customer']
     }
 
-    console.log(user);
 
     if (this.matchPasswords(user.password, formValues.passwordConfirm)) {
       this.as.registration(user)
@@ -55,6 +57,9 @@ export class RegistrationComponent implements OnInit {
       },
       err => {
         alert("There was a problem during registration. \nThe username " + user.userName + " is already in use.")
+        this.notUnique = true;
+        
+        this.usernameInput.nativeElement.focus();
       })
     }
     else {

@@ -27,7 +27,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.productService.getProducts()
       .subscribe(res => {
         this.dataSource.data = res as Product[]
-        console.log(this.dataSource.data);
       }) 
   }
 

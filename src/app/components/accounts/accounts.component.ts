@@ -5,7 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Account } from 'src/app/models/account';
+import { Role } from 'src/app/models/role';
 import { AccountService } from 'src/app/services/account.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
 
@@ -29,6 +31,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private accountService: AccountService,
+              private authService: AuthService,
               private dialog: MatDialog
               ) { }
 
@@ -36,7 +39,13 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     this.accountService.getAccounts()
       .subscribe(res => {
         this.dataSource.data = res as Account[]
-        console.log(this.dataSource.data);
+
+        for (let i = 0; i < this.dataSource.data.length; i++) {
+          this.authService.getUserRoleById(this.dataSource.data[i].userID)
+            .subscribe(res => {
+              this.dataSource.data[i].role = (res as Role).role
+          })
+        }
       }) 
   }
 
