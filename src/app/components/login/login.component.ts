@@ -13,6 +13,8 @@ export class LoginComponent{
   isLoginError: boolean = false;
   @ViewChild('username')usernameInput!: ElementRef;
 
+  hide = true;
+
   public get isLoggedIn(): boolean{
     return this.as.isAuthenticated();
   }
