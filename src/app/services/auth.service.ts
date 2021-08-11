@@ -77,6 +77,11 @@ export class AuthService {
   getUserRoleById(id: string): Observable<Role>{
     return this.http.get<Role>(`${this.apiURL}authentication/${id}`, {headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY))})
   }
+
+  checkUsername(id: string, userName: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiURL}authentication/checkUsername?id=${id}&userName=${userName}`, 
+                                  {headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY))})
+  }
 }
 
 

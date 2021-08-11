@@ -5,11 +5,11 @@
             <span class="list-title">Personal account</span>
             <button *ngIf="!isEditAccount" mat-flat-button color="warn" class="edit-button" (click)='changeStateEditAccount()'>Edit account</button>
         </div>
-        <mat-card>
-            <mat-label>ID: {{account.userID}}</mat-label>
-        </mat-card>
-
+        
         <div *ngIf="!isEditAccount">
+            <mat-card>
+                <mat-label>ID: {{account.userID}}</mat-label>
+            </mat-card>
             <mat-card>
                 <label>First Name: {{account.firstName}}</label>
             </mat-card>
@@ -33,35 +33,71 @@
             </mat-card>
         </div>
         
-        <div *ngIf="isEditAccount">
-            <mat-card>
-                <label>First Name:</label>
-                <input class="input-width-max" type="text" value={{account.firstName}} matInput placeholder="first name" #firstName>
-            </mat-card>
-            <mat-card>
-                <label>Last Name:</label>
-                <input class="input-width-max" type="text" value={{account.lastName}} matInput placeholder="last name" #lastName>
-            </mat-card>
-            <mat-card>
-                <label>Username:</label>
-                <input class="input-width-max" type="text" value={{account.userName}} matInput placeholder="username" #username>
-            </mat-card>
-            <mat-card>
-                <label>Email:</label>
-                <input class="input-width-max" type="email" value={{account.email}} matInput placeholder="example@gmail.com" #email>
-            </mat-card>
-            <mat-card>
-                <label>Phone:</label>
-                <input class="input-width-max" type="text" value={{account.phoneNumber}} matInput placeholder="+375*********" #phone pattern="^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$">
-            </mat-card>
-            <div class="save-button-div" *ngIf="isEditAccount">
-                <button class="save-button" mat-flat-button color="primary" (click)='saveChanges(firstName.value, lastName.value, username.value, email.value, phone.value)'>Save</button>
-            </div>
-            <div class="save-button-div" *ngIf="isEditAccount">
-                <button class="save-button" mat-flat-button color="warn" (click)='cancel()'>Cancel</button>
-            </div>
+        <div class="edit-account-form" *ngIf="isEditAccount">
+            <form  [formGroup]="editAccountForm" autocomplete="off" novalidate (ngSubmit)="saveChanges(editAccountForm.value)">
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="firstName" class="col-form-label col-sm-2">First Name</mat-label>
+                        <input class="input-width-max" type="text" matInput id="firstName" formControlName="firstName" placeholder="Ivan" #firstName required pattern="^([А-Я]{1}[а-яё]+|[A-Z]{1}[a-z]+)$">
+                    </mat-form-field>
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="hasError('firstName', 'pattern')">Please provide a valid first name</em>
+                    </div>
+                </div>
+    
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="lastName" class="col-form-label col-sm-2">Last Name</mat-label>
+                        <input class="input-width-max" type="text" matInput id="lastName" formControlName="lastName" placeholder="Ivanov" #lastName required pattern="^([А-Я]{1}[а-яё]+|[A-Z]{1}[a-z]+)$">
+                    </mat-form-field>
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="hasError('lastName', 'pattern')">Please provide a valid last name</em>
+                    </div>
+                </div>
+    
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="userName" class="col-form-label col-sm-2">Username</mat-label>
+                        <input class="input-width-max" type="text" matInput id="userName" formControlName="userName" placeholder="exapmle" #userName required>
+                    </mat-form-field>
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="validateControl('userName') && hasError('userName', 'required')">Username is required</em>
+                        <em *ngIf="notUnique">Username is already exist</em>
+                    </div>
+                </div>
+    
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="email" class="col-form-label col-sm-2">Email</mat-label>
+                        <input class="input-width-max" type="email" matInput id="email" formControlName="email" placeholder="example@gmail.com" #email>
+                    </mat-form-field>
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="validateControl('email') && hasError('email', 'email')">Please provide a valid email</em>
+                        <em *ngIf="validateControl('email') && hasError('email', 'required')">Email is required</em>
+                    </div>
+                </div>
+    
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="phoneNumber" class="col-form-label col-sm-2">Phone</mat-label>
+                        <input type="text" matInput id="phoneNumber" formControlName="phoneNumber" placeholder="+375*********" #phoneNumber pattern="^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$">
+                    </mat-form-field>  
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="validateControl('phoneNumber') && hasError('phoneNumber', 'required')">Phone number is required</em>
+                        <em *ngIf="validateControl('phoneNumber') && hasError('phoneNumber', 'pattern')">Please provide a valid phone number</em>
+                    </div>
+                </div>
+    
+                <div class="save-button-div" *ngIf="isEditAccount">
+                    <button class="save-button" type="submit" mat-flat-button color="primary">Save</button>
+                </div>
+    
+                <div class="save-button-div" *ngIf="isEditAccount">
+                    <button class="save-button" mat-flat-button color="warn" (click)='cancel()'>Cancel</button>
+                </div>
+            </form>
         </div>
-
+        
         <div class="logout-button-div" *ngIf="!isEditAccount">
             <button class="logout-button" mat-flat-button color="primary" (click)='logout()'>Logout</button>
         </div>
