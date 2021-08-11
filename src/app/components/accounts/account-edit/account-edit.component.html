@@ -32,13 +32,12 @@
 
         <!--Edit user role field-->
         <div class="form-group row div-info">
-            <label>Roles: </label>
-            <mat-form-field appearance="fill">
+            <mat-form-field class="mat-form-field-infix">
                 <mat-label>Roles</mat-label>
                 <mat-select [formControl]="rolesSelect" multiple [(value)]="selectedRole">
-                <mat-option *ngFor="let role of rolesList" [value]="role">{{role}}</mat-option>
+                    <mat-option *ngFor="let role of rolesList" [value]="role">{{role}}</mat-option>
                 </mat-select>
-            </mat-form-field> 
+            </mat-form-field>
         </div>  
     </mat-card>
 
