@@ -10,9 +10,11 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./registration.component.scss']
 })
 export class RegistrationComponent implements OnInit {
-  notUnique: boolean = false;
   @ViewChild('userName')usernameInput!: ElementRef;
 
+  passwordHide = true;
+  confirmHide = true;
+  
   public registrationForm!: FormGroup;
 
   constructor(private as: AuthService, private router: Router) {
@@ -23,8 +25,8 @@ export class RegistrationComponent implements OnInit {
     this.registrationForm = new FormGroup({
       userName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl('', [Validators.required]),
-      passwordConfirm: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+      passwordConfirm: new FormControl('', [Validators.required, Validators.minLength(8)]),
       phoneNumber: new FormControl('', [Validators.required])
     })
   }
@@ -55,11 +57,11 @@ export class RegistrationComponent implements OnInit {
         console.log("Succesful registration")
         this.navigateToLogin();
       },
-      err => {
-        alert("There was a problem during registration. \nThe username " + user.userName + " is already in use.")
-        this.notUnique = true;
-        
+      err => {        
         this.usernameInput.nativeElement.focus();
+        this.registrationForm.controls["userName"].setErrors({
+          notUnique: true
+        });
       })
     }
     else {

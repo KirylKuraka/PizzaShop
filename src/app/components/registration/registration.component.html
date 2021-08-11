@@ -11,7 +11,7 @@
                     </mat-form-field>
                     <div class="col-md-5 error-div">
                         <em *ngIf="validateControl('userName') && hasError('userName', 'required')">Username is required</em>
-                        <em *ngIf="notUnique">Username is already exist</em>
+                        <em *ngIf="hasError('userName', 'notUnique')">Username is already exists</em>
                     </div>
                 </div>
 
@@ -40,20 +40,28 @@
                 <div class="form-group row">
                     <mat-form-field class="mat-form-field-infix">
                         <mat-label for="password" class="col-form-label col-sm-2">Password</mat-label>
-                        <input class="input-width-max" type="password" matInput id="password" formControlName="password" placeholder="password" #password>
+                        <input class="input-width-max" [type]="passwordHide ? 'password' : 'text'" matInput id="password" formControlName="password" placeholder="password" #password pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}">
+                        <button type="button" mat-icon-button matSuffix (click)="passwordHide = !passwordHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordHide">
+                            <mat-icon>{{passwordHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>  
                     <div class="row-md-5 error-div">
                         <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
+                        <em *ngIf="validateControl('password') && hasError('password', 'pattern')">The password must contain at least 8 upper and lower case numbers and letters</em>
                     </div>  
                 </div>
 
                 <div class="form-group row">
                     <mat-form-field class="mat-form-field-infix">
                         <mat-label for="passwordConfirm" class="col-form-label col-sm-2">Confirm password</mat-label>
-                        <input class="input-width-max" type="password" matInput id="passwordConfirm" formControlName="passwordConfirm" placeholder="passwordConfirm" #passwordConfirm>
+                        <input class="input-width-max" [type]="confirmHide ? 'password' : 'text'" matInput id="passwordConfirm" formControlName="passwordConfirm" placeholder="confirm" #passwordConfirm pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{8,}">
+                        <button type="button" mat-icon-button matSuffix (click)="confirmHide = !confirmHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="confirmHide">
+                            <mat-icon>{{confirmHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
                     </mat-form-field>         
                     <div class="row-md-5 error-div">
                         <em *ngIf="validateControl('passwordConfirm') && hasError('passwordConfirm', 'required')">Password confirm is required</em>
+                        <em *ngIf="validateControl('passwordConfirm') && hasError('passwordConfirm', 'pattern')">The password must contain at least 8 upper and lower case numbers and letters</em>
                     </div>  
                 </div>
 
