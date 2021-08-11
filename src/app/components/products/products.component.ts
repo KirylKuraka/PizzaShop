@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductEditComponent } from './product-edit/product-edit.component';
 
 @Component({
   selector: 'app-products',
@@ -63,7 +64,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   openEditDialog(product: Product): void {
-    const dialogRef = this.dialog.open(ProductDetailsComponent, {
+    const dialogRef = this.dialog.open(ProductEditComponent, {
       width: 'auto',
       height: 'auto',
       data: {product : product}

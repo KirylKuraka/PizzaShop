@@ -48,9 +48,6 @@
         <ng-container matColumnDef="update">
             <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
             <mat-cell *matCellDef="let product">
-                <!-- <button mat-icon-button color="accent" (click)="redirectToUpdate(product.productID, product)">
-                    <img class="image-icon" src="../../../assets/edit_icon.ico">
-                 </button> -->
                  <button mat-icon-button color="accent" (click)="openEditDialog(product)">
                     <img class="image-icon" src="../../../assets/edit_icon.ico">
                  </button>
