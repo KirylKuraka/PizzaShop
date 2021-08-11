@@ -8,6 +8,7 @@ import { Account } from 'src/app/models/account';
 import { Role } from 'src/app/models/role';
 import { AccountService } from 'src/app/services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { AccountDeleteComponent } from './account-delete/account-delete.component';
 import { AccountDetailsComponent } from './account-details/account-details.component';
 import { AccountEditComponent } from './account-edit/account-edit.component';
 
@@ -58,16 +59,26 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   }
 
-  public redirectToDelete = (id: string) => {
-    if (confirm("Вы уверены, что хотите удалить выбранную запись?")) {
-      this.dataSource.data = this.dataSource.data.filter((item) => {
-        return item.userID != id;
-      })
+  openDeleteDilog(account: Account): void {
+    const dialogRef = this.dialog.open(AccountDeleteComponent, {
+      width: 'auto',
+      height: 'auto',
+      data: {account: account}
+    })
 
-      this.accountService.deleteAccountById(id)
-        .subscribe(res => {
-        })
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        if (result){
+          this.dataSource.data = this.dataSource.data.filter((item) => {
+            return item.userID != account.userID;
+          })
+    
+          this.accountService.deleteAccountById(account.userID)
+            .subscribe(res => {
+            })
+        }
+      }
+    })
   }
 
   openDetailsDialog(account: Account): void{

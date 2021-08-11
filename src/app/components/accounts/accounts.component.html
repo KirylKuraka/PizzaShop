@@ -69,7 +69,7 @@
         <ng-container matColumnDef="delete">
             <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
             <mat-cell *matCellDef="let account">
-                <button class="delete-btn" mat-icon-button color="warn" (click)="redirectToDelete(account.userID)" *ngIf="canDelete(account.userID, account)">
+                <button class="delete-btn" mat-icon-button color="warn" (click)="openDeleteDilog(account)" *ngIf="canDelete(account.userID, account)">
                     <img class="image-icon" src="../../../assets/delete_icon.ico">
                 </button>
             </mat-cell>

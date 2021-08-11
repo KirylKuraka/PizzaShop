@@ -33,6 +33,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { AccountEditComponent } from './components/accounts/account-edit/account-edit.component';
 import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
 import { ProductEditComponent } from './components/products/product-edit/product-edit.component';
+import { AccountDeleteComponent } from './components/accounts/account-delete/account-delete.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -51,6 +52,7 @@ export function tokenGetter(){
     AccountEditComponent,
     ProductDetailsComponent,
     ProductEditComponent,
+    AccountDeleteComponent,
   ],
   exports: [
     AccountsComponent,

@@ -1,0 +1,25 @@
+<div id="account-div">
+    <mat-card>
+        <span class="list-title">Account for deleting</span>
+
+        <div class="form-group row div-info">
+            <label>First Name: {{account.firstName}}</label>
+        </div>
+
+        <div class="form-group row div-info">
+            <label>Last Name: {{account.lastName}}</label>
+        </div>
+
+        <div class="form-group row div-info">
+            <label>Username: {{account.userName}}</label>
+        </div>
+
+        <div class="form-group row div-info">
+            <label>Email: {{account.email}}</label>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button color="warn" (click)="onDeleteClick()" cdkFocusInitial>Delete</button>
+            <button mat-button (click)="onNoClick()">Cancel</button>
+          </div>
+    </mat-card>
+</div>
