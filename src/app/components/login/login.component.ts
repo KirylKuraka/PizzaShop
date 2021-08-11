@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Account } from 'src/app/models/account';
 import { AccountService } from 'src/app/services/account.service';
@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent{
+  isLoginError: boolean = false;
+  @ViewChild('username')usernameInput!: ElementRef;
 
   public get isLoggedIn(): boolean{
     return this.as.isAuthenticated();
@@ -33,12 +35,14 @@ export class LoginComponent{
            
           localStorage.setItem("account", Account.convertAccountToString(account));
           localStorage.setItem("currentAccountName", account.userName)
-          
-          this.navigateToHome();
+
+          this.isLoginError = false;
         })
+
+        this.navigateToHome();
       }, err => {
-        alert('Wrong login or password');
-        console.error('Wrong login or password')
+        this.isLoginError = true;
+        this.usernameInput.nativeElement.focus();
       })
   }
 
