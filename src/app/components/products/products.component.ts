@@ -5,7 +5,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Product } from 'src/app/models/product';
+import { ProductType } from 'src/app/models/productType';
 import { ProductService } from 'src/app/services/product.service';
+import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductDeleteComponent } from './product-delete/product-delete.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
 
@@ -40,16 +43,50 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
   }
 
-  public redirectToDelete = (id: string) => {
-    if (confirm("Вы уверены, что хотите удалить выбранную запись?")) {
-      this.dataSource.data = this.dataSource.data.filter((item) => {
-        return item.productID != id;
-      })
+  openCreateDialog(): void{
+    const dialogRef = this.dialog.open(ProductCreateComponent, {
+      width: 'auto',
+      height: 'auto'
+    })
 
-      this.productService.deleteProductById(id)
-        .subscribe(res => {
-        })
-    }
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {  
+        this.dataSource.data = this.dataSource.data.concat([result])
+
+        let product = new Product(result.productID,
+                                  result.productName,
+                                  result.description,
+                                  result.cost,
+                                  result.promotionalPointsCost,
+                                  result.productTypeID)
+
+        this.productService.createProduct(product)
+          .subscribe(res => {
+          })
+      }
+    })
+  }
+
+  openDeleteDialog(product: Product): void {
+    const dialogRef = this.dialog.open(ProductDeleteComponent, {
+      width: 'auto',
+      height: 'auto',
+      data: {product: product}
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        if (result){
+          this.dataSource.data = this.dataSource.data.filter((item) => {
+            return item.productID != product.productID;
+          })
+    
+          this.productService.deleteProductById(product.productID)
+            .subscribe(res => {
+            })
+        }
+      }
+    })
   }
 
   openDetailsDialog(product: Product): void{

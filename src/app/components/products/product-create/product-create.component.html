@@ -1,0 +1,62 @@
+<div id="product-div">
+    <mat-card>
+        <span class="list-title">Create</span>
+
+        <div class="edit-product-form">
+            <form  [formGroup]="editProductForm" autocomplete="off" novalidate>
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="productName" class="col-form-label col-sm-2">First Name</mat-label>
+                        <input class="input-width-max" type="text" matInput id="productName" formControlName="productName" placeholder="Name" #productName required>
+                    </mat-form-field>
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="validateControl('productName') && hasError('productName', 'required')">Product name is required</em>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="description" class="col-form-label col-sm-2">Description</mat-label>
+                        <textarea class="input-width-max" [matTextareaAutosize]='true' matInput id="description" formControlName="description" placeholder="Description" #description required></textarea>
+                    </mat-form-field>
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="validateControl('description') && hasError('description', 'required')">Description is required</em>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="cost" class="col-form-label col-sm-2">Cost</mat-label>
+                        <input class="input-width-max" type="number" matInput id="cost" formControlName="cost" placeholder="Cost" #cost required>
+                    </mat-form-field>
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="validateControl('cost') && hasError('cost', 'required')">Cost is required</em>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <mat-form-field class="mat-form-field-infix">
+                        <mat-label for="pPoints" class="col-form-label col-sm-2">PPoints cost</mat-label>
+                        <input class="input-width-max" type="number" matInput id="pPoints" formControlName="pPoints" placeholder="PPoints" #pPoints required>
+                    </mat-form-field>
+                    <div class="col-md-5 error-div">
+                        <em *ngIf="validateControl('pPoints') && hasError('pPoints', 'required')">PPoints cost is required</em>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-group row div-info">
+            <mat-form-field class="mat-form-field-infix">
+                <mat-label>Product Type</mat-label>
+                <mat-select [formControl]="typesSelect" [(value)]="selectedType">
+                    <mat-option *ngFor="let type of typesList" [value]="type">{{type}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div> 
+    </mat-card>
+
+    <div class="form-group row save-button-div">
+        <button mat-flat-button color="primary" (click)="saveChanges()">Сохранить</button>
+    </div>
+</div>

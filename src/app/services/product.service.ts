@@ -35,7 +35,7 @@ export class ProductService {
     return this.http.put<string>(`${this.baseURL}${id}`, product, {headers: headers});
   }
 
-  createProduct(id: string, product: Product): Observable<string>{
+  createProduct(product: Product): Observable<string>{
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY)

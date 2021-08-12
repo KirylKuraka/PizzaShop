@@ -1,0 +1,30 @@
+<div id="product-div">
+    <mat-card>
+        <span class="list-title">Product for deleting</span>
+
+        <div class="form-group row div-info">
+            <label>Product Name: {{product.productName}}</label>
+        </div>
+
+        <div class="form-group row div-info">
+            <label>Description: {{product.description}}</label>
+        </div>
+
+        <div class="form-group row div-info">
+            <label>Cost: {{product.cost}}</label>
+        </div>
+
+        <div class="form-group row div-info">
+            <label>PPoints cost: {{product.promotionalPointsCost}}</label>
+        </div>
+
+        <div class="form-group row div-info">
+            <label>Product type: {{product.productType.productTypeName}}</label>
+        </div>
+    </mat-card>
+
+    <div mat-dialog-actions class="bottom-buttons-div">
+        <button mat-button color="warn" (click)="onDeleteClick()" cdkFocusInitial>Delete</button>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+      </div>
+</div>

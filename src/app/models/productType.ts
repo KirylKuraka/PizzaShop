@@ -1,5 +1,5 @@
 export class ProductType{
-    constructor(public productTypeID: string,
-                public productTypeName: string) {           
-       }
+    public productTypeID!: string
+    public productTypeName!: string
+
 }

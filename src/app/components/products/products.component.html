@@ -5,6 +5,10 @@
         </mat-form-field>
     </div>
 
+    <div class="add-new-button-div">
+        <button mat-raised-button (click)="openCreateDialog()">Add new</button>
+    </div>
+
     <mat-table [dataSource]="dataSource" matSort matSortStart="asc">
         <!--First Name-->
         <ng-container matColumnDef="productTypeName">
@@ -57,7 +61,7 @@
         <ng-container matColumnDef="delete">
             <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
             <mat-cell *matCellDef="let product">
-                <button class="delete-btn" mat-icon-button color="warn" (click)="redirectToDelete(product.productID)">
+                <button class="delete-btn" mat-icon-button color="warn" (click)="openDeleteDialog(product)">
                     <img class="image-icon" src="../../../assets/delete_icon.ico">
                 </button>
             </mat-cell>

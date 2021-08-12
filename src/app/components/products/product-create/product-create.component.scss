@@ -1,0 +1,37 @@
+#product-div{
+    margin:0 auto;
+    width:100%;
+}
+
+.list-title{
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+.save-button-div{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.mat-form-field-infix {
+    width: auto;
+    padding: 0;
+    border-top-width: 0;
+}
+
+.edit-product-form {
+    width: auto;
+    height: auto;
+    min-width: 500px;
+    font-size: 20px;
+    margin: 0;
+}
+
+.error-div {
+    color: red;
+    font-size: 14px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
