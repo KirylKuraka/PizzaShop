@@ -17,9 +17,10 @@
         <div class="form-group row div-info">
             <label>Email: {{account.email}}</label>
         </div>
-        <div mat-dialog-actions>
-            <button mat-button color="warn" (click)="onDeleteClick()" cdkFocusInitial>Delete</button>
-            <button mat-button (click)="onNoClick()">Cancel</button>
-          </div>
     </mat-card>
+
+    <div mat-dialog-actions class="bottom-buttons-div">
+        <button mat-button color="warn" (click)="onDeleteClick()" cdkFocusInitial>Delete</button>
+        <button mat-button (click)="onNoClick()">Cancel</button>
+    </div>
 </div>
