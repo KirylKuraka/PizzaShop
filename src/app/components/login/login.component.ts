@@ -15,6 +15,7 @@ export class LoginComponent{
 
   hide = true;
 
+  showSpinner = false;
   public get isLoggedIn(): boolean{
     return this.as.isAuthenticated();
   }
@@ -24,6 +25,8 @@ export class LoginComponent{
   }
 
   login(username: string, password: string){
+    this.showSpinner = true;
+
     this.as.login(username, password)
       .subscribe(res => {
         this.accountService.getAccount()
@@ -43,6 +46,7 @@ export class LoginComponent{
 
         this.navigateToHome();
       }, err => {
+        this.showSpinner = false;
         this.isLoginError = true;
         this.usernameInput.nativeElement.focus();
       })

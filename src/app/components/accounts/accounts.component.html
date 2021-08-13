@@ -5,7 +5,7 @@
         </mat-form-field>
     </div>
 
-    <mat-table [dataSource]="dataSource" matSort matSortStart="asc">
+    <mat-table [dataSource]="dataSource" matSort matSortDirection="asc" matSortActive="userName">
         <!--First Name-->
         <ng-container matColumnDef="firstName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
@@ -31,13 +31,13 @@
         </ng-container>
 
         <!--Phone-->
-        <ng-container matColumnDef="phone">
+        <ng-container matColumnDef="phoneNumber">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Phone</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.phoneNumber}}</mat-cell>
         </ng-container>
 
         <!--PPoints-->
-        <ng-container matColumnDef="pPoints">
+        <ng-container matColumnDef="promotionalPoins">
             <mat-header-cell *matHeaderCellDef mat-sort-header>PPoints</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.promotionalPoins}}</mat-cell>
         </ng-container>

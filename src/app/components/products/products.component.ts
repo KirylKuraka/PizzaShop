@@ -19,7 +19,7 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<Product>();
-  columns = ['productTypeName', 'productName', 'description', 'cost', 'promotionalPointsCost', 'details', 'update', 'delete']
+  columns = ['productType.productTypeName', 'productName', 'description', 'cost', 'promotionalPointsCost', 'details', 'update', 'delete']
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -35,6 +35,13 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    // this.dataSource.sortingDataAccessor = (item, property) => {
+    //   switch(property) {
+    //     case 'productType.productTypeName': return item.productType.productTypeName;
+    //     default: return item[property];
+    //   }
+    // };
+
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }

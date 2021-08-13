@@ -9,32 +9,32 @@
         <button mat-raised-button (click)="openCreateDialog()">Add new</button>
     </div>
 
-    <mat-table [dataSource]="dataSource" matSort matSortStart="asc">
-        <!--First Name-->
-        <ng-container matColumnDef="productTypeName">
+    <mat-table [dataSource]="dataSource" matSort matSortDirection="asc" matSortActive="productName">
+        <!--Product Type-->
+        <ng-container matColumnDef="productType.productTypeName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
             <mat-cell *matCellDef="let product">{{product.productType.productTypeName}}</mat-cell>
         </ng-container>
 
-        <!--Last Name-->
+        <!--Product Name-->
         <ng-container matColumnDef="productName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
             <mat-cell *matCellDef="let product">{{product.productName}}</mat-cell>
         </ng-container>
 
-        <!--Username-->
+        <!--Description-->
         <ng-container matColumnDef="description">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
             <mat-cell *matCellDef="let product">{{product.description}}</mat-cell>
         </ng-container>
 
-        <!--Email-->
+        <!--Cost-->
         <ng-container matColumnDef="cost">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Cost</mat-header-cell>
             <mat-cell *matCellDef="let product">{{product.cost}}</mat-cell>
         </ng-container>
 
-        <!--Phone-->
+        <!--PPoints-->
         <ng-container matColumnDef="promotionalPointsCost">
             <mat-header-cell *matHeaderCellDef mat-sort-header>PPoints</mat-header-cell>
             <mat-cell *matCellDef="let product">{{product.promotionalPointsCost}}</mat-cell>

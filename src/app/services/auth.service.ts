@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Token } from '../models/token';
 import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -54,7 +54,7 @@ export class AuthService {
   
   isAuthenticated(): boolean{
     var token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if(token != null){
+    if(token){
       return !this.jwtHelper.isTokenExpired(token);
     }
     else{
@@ -81,6 +81,16 @@ export class AuthService {
   checkUsername(id: string, userName: string): Observable<boolean> {
     return this.http.get<boolean>(`${this.apiURL}authentication/checkUsername?id=${id}&userName=${userName}`, 
                                   {headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY))})
+  }
+
+  // refreshToken(token: string, refreshToken: string): Observable<Token> {
+  //   return this.http.post<Token>(`${this.apiURL}authentication/refresh`, {token: token, refreshToken: refreshToken},
+  //                                 {headers: new HttpHeaders().set("Content-Type", "application/json")});
+  // }
+
+  async refreshToken(token: string, refreshToken: string) {
+    return this.http.post(`${this.apiURL}authentication/refresh`, {token: token, refreshToken: refreshToken},
+                                  {headers: new HttpHeaders().set("Content-Type", "application/json"), observe: 'response'}).toPromise();
   }
 }
 

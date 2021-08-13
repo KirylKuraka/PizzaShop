@@ -1,6 +1,6 @@
 <!--Authentication form-->
-<div id="center-block">
-  <mat-card>
+<div id="center-block" *ngIf="!showSpinner">
+  <mat-card >
     <div class="login-div">
       <mat-form-field class="example-from-field">
         <mat-label>Username</mat-label>
@@ -15,9 +15,13 @@
       </mat-form-field>
       <button mat-flat-button color="primary" (click)='login(username.value, password.value)'>Login</button>
     </div>
+
     <div class="col-md-5 error-div">
       <em *ngIf="isLoginError">Wrong login or password</em>
     </div>
   </mat-card>
-  
+</div>
+
+<div class="spinner-div" *ngIf="showSpinner">
+  <mat-spinner color="primary" mode="indeterminate"></mat-spinner>
 </div>

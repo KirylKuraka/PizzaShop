@@ -26,7 +26,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
   public showFlag: boolean = false;
   
   public dataSource = new MatTableDataSource<Account>();
-  columns = ['firstName', 'lastName', 'userName', 'email', 'phone', 'pPoints', 'role', 'details', 'update', 'delete']
+  columns = ['firstName', 'lastName', 'userName', 'email', 'phoneNumber', 'promotionalPoins', 'role', 'details', 'update', 'delete']
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
