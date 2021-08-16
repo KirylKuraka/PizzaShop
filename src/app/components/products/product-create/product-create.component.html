@@ -57,6 +57,6 @@
     </mat-card>
 
     <div class="form-group row save-button-div">
-        <button mat-flat-button color="primary" (click)="saveChanges()">Сохранить</button>
+        <button mat-flat-button color="primary" (click)="saveChanges()" [disabled]="!editProductForm.valid">Сохранить</button>
     </div>
 </div>
