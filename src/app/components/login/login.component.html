@@ -1,27 +1,29 @@
-<!--Authentication form-->
-<div id="center-block" *ngIf="!showSpinner">
-  <mat-card >
-    <div class="login-div">
-      <mat-form-field class="example-from-field">
-        <mat-label>Username</mat-label>
-        <input type="text" matInput placeholder="username" #username>
-      </mat-form-field>
-      <mat-form-field class="example-from-field">
-        <mat-label>Password</mat-label>
-        <input [type]="hide ? 'password' : 'text'" matInput placeholder="password" #password>
-        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-      </mat-form-field>
-      <button mat-flat-button color="primary" (click)='login(username.value, password.value)'>Login</button>
-    </div>
+<div class="main-block">
+  <!--Authentication form-->
+  <div id="center-block" *ngIf="!showSpinner">
+    <mat-card >
+      <div class="login-div">
+        <mat-form-field class="example-from-field">
+          <mat-label>Username</mat-label>
+          <input type="text" matInput placeholder="username" #username>
+        </mat-form-field>
+        <mat-form-field class="example-from-field">
+          <mat-label>Password</mat-label>
+          <input [type]="hide ? 'password' : 'text'" matInput placeholder="password" #password>
+          <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        </mat-form-field>
+        <button mat-flat-button color="primary" (click)='login(username.value, password.value)'>Login</button>
+      </div>
 
-    <div class="col-md-5 error-div">
-      <em *ngIf="isLoginError">Wrong login or password</em>
-    </div>
-  </mat-card>
-</div>
+      <div class="col-md-5 error-div">
+        <em *ngIf="isLoginError">Wrong login or password</em>
+      </div>
+    </mat-card>
+  </div>
 
-<div class="spinner-div" *ngIf="showSpinner">
-  <mat-spinner color="primary" mode="indeterminate"></mat-spinner>
+  <div class="spinner-div" *ngIf="showSpinner">
+    <mat-spinner color="primary" mode="indeterminate"></mat-spinner>
+  </div>
 </div>
