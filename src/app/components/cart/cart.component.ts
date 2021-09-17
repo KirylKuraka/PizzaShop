@@ -10,7 +10,7 @@ import { CartItem } from 'src/app/models/cartItem';
 })
 export class CartComponent implements OnInit {
   public dataSource = new MatTableDataSource<CartItem>();
-  columns = ['delete', 'picture', 'productName', 'cost']
+  columns = ['delete', 'picture', 'productName', 'cost', 'quantity']
 
   cart: Cart = new Cart();
   text: string = "";
@@ -26,5 +26,33 @@ export class CartComponent implements OnInit {
 
   removeItemFromCart(item: CartItem): void {
     this.cart.removeItem(item);
+    this.dataSource.data = this.cart.items
+    Cart.convertToJSON(this.cart);
+  }
+
+  decreaseQuantity(item: CartItem): void {
+    let index: number = this.cart.items.findIndex((element) =>
+      element.product.productID == item.product.productID
+    )
+
+    if (this.cart.items[index].quantity > 1) {
+      this.cart.items[index].quantity--;
+    }
+
+    Cart.convertToJSON(this.cart);
+  }
+
+  increaseQuantity(item: CartItem): void {
+    let index: number = this.cart.items.findIndex((element) => 
+      element.product.productID == item.product.productID
+    )
+
+    this.cart.items[index].quantity++;
+
+    Cart.convertToJSON(this.cart);
+  }
+
+  getTotalSum(): number {
+    return this.cart.getTotalSum();
   }
 }

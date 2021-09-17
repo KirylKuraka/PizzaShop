@@ -1,37 +1,47 @@
 <h1>Корзина</h1>
 
 <div class="full-cart">
-    <form action="create-order" method="POST">
-        <div class="cart">
-            <mat-table [dataSource]="dataSource">
-                <ng-container matColumnDef="delete">
-                    <mat-cell *matCellDef="let item">
-                        <button class="delete-btn" mat-icon-button color="warn" (click)="removeItemFromCart(item)">
-                            <img class="image-icon" src="../../../assets/red-cross-icon.png">
-                        </button>
-                    </mat-cell>
-                </ng-container>
+    <!--action="create-order" method="POST"-->
+    <div class="cart">
+        <mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="delete">
+                <mat-cell *matCellDef="let item">
+                    <button class="delete-btn" mat-icon-button color="warn" (click)="removeItemFromCart(item)">
+                        <img class="image-icon" src="../../../assets/red-cross-icon.png">
+                    </button>
+                </mat-cell>
+            </ng-container>
 
-                <ng-container matColumnDef="picture">
-                    <mat-cell *matCellDef="let item">
-                        <img *ngIf="item.product.productType.productTypeName == 'Пицца'" class="product-image-icon" src="../../../assets/pizza.png">
-                        <img *ngIf="item.product.productType.productTypeName == 'Соус'" class="product-image-icon" src="../../../assets/sauce.png">
-                        <img *ngIf="item.product.productType.productTypeName == 'Напиток'" class="product-image-icon" src="../../../assets/drink.png">
-                    </mat-cell>
-                </ng-container>
+            <ng-container matColumnDef="picture">
+                <mat-cell *matCellDef="let item">
+                    <img *ngIf="item.product.productType.productTypeName == 'Пицца'" class="product-image-icon" src="../../../assets/pizza.png">
+                    <img *ngIf="item.product.productType.productTypeName == 'Соус'" class="product-image-icon" src="../../../assets/sauce.png">
+                    <img *ngIf="item.product.productType.productTypeName == 'Напиток'" class="product-image-icon" src="../../../assets/drink.png">
+                </mat-cell>
+            </ng-container>
 
-                <ng-container matColumnDef="productName">
-                    <mat-cell *matCellDef="let item">{{item.product.productName}}</mat-cell>
-                </ng-container>
+            <ng-container matColumnDef="productName">
+                <mat-cell *matCellDef="let item">{{item.product.productName}}</mat-cell>
+            </ng-container>
 
-                <ng-container matColumnDef="cost">
-                    <mat-cell *matCellDef="let item">{{item.product.cost}} руб.</mat-cell>
-                </ng-container>
+            <ng-container matColumnDef="cost">
+                <mat-cell *matCellDef="let item">{{item.product.cost}} руб.</mat-cell>
+            </ng-container>
 
-                <mat-row *matRowDef="let row; columns: columns;"></mat-row>
-            </mat-table>
-           
+            <ng-container matColumnDef="quantity">
+                <mat-cell *matCellDef="let item">
+                    <button class="quantity-btn" color="primary" (click)="decreaseQuantity(item)">-</button>
+                    <p>{{item.quantity}}</p>
+                    <button class="quantity-btn" color="primary" (click)="increaseQuantity(item)">+</button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+        </mat-table>
+        
+        <div class="sum-div">
+            <p>Общая сумма: {{getTotalSum()}} руб.</p>
         </div>
-    </form>
+    </div>
 </div>
 

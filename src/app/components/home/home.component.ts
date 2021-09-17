@@ -37,7 +37,13 @@ export class HomeComponent implements OnInit {
   }
 
   addToCart(product: Product): void {
-    this.cart.addItem(new CartItem(product));
-    Cart.convertToJSON(this.cart);
+    let index: number = this.cart.items.findIndex((element) => 
+      element.product.productID == product.productID
+    )
+    
+    if (index == -1) {
+      this.cart.addItem(new CartItem(product));
+      Cart.convertToJSON(this.cart);
+    }
   }
 }

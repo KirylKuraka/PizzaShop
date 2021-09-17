@@ -13,14 +13,10 @@ div {
     display: block;
 }
 
-.full-cart form {
-    max-width: 1000px;
+.full-cart .cart {
+    max-width: 1200px;
     margin: auto;
     display: block;
-}
-
-form {
-    text-align: center;
 }
 
 .cart {
@@ -39,6 +35,11 @@ form {
 .cart .mat-cell {
     font-size: 16px;
 }
+
+mat-row {
+    border-bottom-width: 2px;
+}
+
 .image-icon {
     width: 30px;
     height: 30px;
@@ -48,4 +49,24 @@ form {
     width: 150px;
     height: 150px;
     padding: 5px;
+}
+
+.quantity-btn{
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 24px;
+    border: 1px solid black;
+    white-space: nowrap;
+    padding: 0;
+    margin: 0 15px;
+    width: 30px;
+    background-color: transparent;
+}
+
+.cart p {
+    font-size: 24px;
+}
+
+.sum-div {
+    float: right;
 }
