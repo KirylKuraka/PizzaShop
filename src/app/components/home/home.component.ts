@@ -1,4 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Cart } from 'src/app/models/cart';
+import { CartItem } from 'src/app/models/cartItem';
 import { Product } from 'src/app/models/product';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -12,9 +14,12 @@ export class HomeComponent implements OnInit {
   pizzas: Product[] = [];
   sauces: Product[] = [];
   drinks: Product[] = [];
+  cart: Cart = new Cart();
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.cart = Cart.convertToObject();
+  
     this.productService.getProductsWithFilter("Пицца")
       .subscribe(res => {
         this.pizzas = res as Product[];
@@ -29,5 +34,10 @@ export class HomeComponent implements OnInit {
       .subscribe(res => {
         this.sauces = res as Product[];
       })
+  }
+
+  addToCart(product: Product): void {
+    this.cart.addItem(new CartItem(product));
+    Cart.convertToJSON(this.cart);
   }
 }

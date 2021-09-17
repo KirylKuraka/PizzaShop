@@ -1,0 +1,51 @@
+h1 {
+    font-size: 50px;
+    margin-bottom: 0.63em;
+    line-height: 1.5;
+    font-weight: 400;
+
+    display: block;
+    text-align: center;
+    margin-top: 0.63em;
+}
+
+div {
+    display: block;
+}
+
+.full-cart form {
+    max-width: 1000px;
+    margin: auto;
+    display: block;
+}
+
+form {
+    text-align: center;
+}
+
+.cart {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+
+    font-weight: 500;
+}
+
+.cart .mat-cell {
+    font-size: 16px;
+}
+.image-icon {
+    width: 30px;
+    height: 30px;
+}
+
+.product-image-icon{
+    width: 150px;
+    height: 150px;
+    padding: 5px;
+}

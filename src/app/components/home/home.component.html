@@ -1,6 +1,6 @@
 <div class="cart-div">
     <!--(click)="openEditDialog(product)"-->
-    <button class="cart-button" [routerLink]="['/basket']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">
+    <button class="cart-button" [routerLink]="['/cart']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">
         <table class="cart-table">
             <tr>
                 <td><img class="cart-image-icon" src="../../../assets/cart_icon.png"></td>
@@ -17,12 +17,12 @@
             <img itemprop="image" class="image-icon" src="../../../assets/pizza.png">
             <h3 itemprop="name">{{pizza.productName}}</h3>
             <p>Описание: {{pizza.description}}</p>
-            <form action="something" method="POST">
+            <div class="product-form">
                 <div class="price-box">
                     <span>Стоимость: {{pizza.cost}} руб</span>
                 </div>
-                <button>В корзину</button>
-            </form>
+                <button (click)="addToCart(pizza)">В корзину</button>
+            </div>
         </div>
     </div>
 
@@ -32,12 +32,12 @@
             <img itemprop="image" class="image-icon" src="../../../assets/drink.png">
             <h3 itemprop="name">{{drink.productName}}</h3>
             <p>Описание: {{drink.description}}</p>
-            <form action="something" method="POST">
+            <div class="product-form">
                 <div class="price-box">
                     <span>Стоимость: {{drink.cost}} руб</span>
                 </div>
-                <button>В корзину</button>
-            </form>
+                <button (click)="addToCart(drink)">В корзину</button>
+            </div>
         </div>
     </div>
 
@@ -47,12 +47,12 @@
             <img itemprop="image" class="image-icon" src="../../../assets/sauce.png">
             <h3 itemprop="name">{{sauce.productName}}</h3>
             <p>Описание: {{sauce.description}}</p>
-            <form action="something" method="POST">
+            <div class="product-form">
                 <div class="price-box">
                     <span>Стоимость: {{sauce.cost}} руб</span>
                 </div>
-                <button>В корзину</button>
-            </form>
+                <button (click)="addToCart(sauce)">В корзину</button>
+            </div>
         </div>
     </div>
 </div>

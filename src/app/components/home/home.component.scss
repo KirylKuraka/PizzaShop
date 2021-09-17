@@ -50,14 +50,11 @@ div{
     font-size: 14px!important;
 }
 
-.cart-box form {
+.product-form{
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-}
-
-form{
     text-align: center;
 }
 
@@ -67,13 +64,13 @@ form{
     padding-bottom: 15px;
 }
 
-form .price-box span {
+.product-form .price-box span {
     font-size: 21px;
     font-weight: 500;
     font-family: "Roboto",sans-serif;
 }
 
-form button {
+.product-form button {
     background: #fff;
     border: 1px solid #57c961;
     -webkit-border-radius: 8px;
@@ -88,7 +85,7 @@ form button {
     transition-duration: 0.4s;
 }
 
-form button:hover{
+.product-form button:hover{
     background: #57c961;
     border: 1px solid #57c961;
     color: #fff;
@@ -103,6 +100,7 @@ form button:hover{
     border-radius: 12px;
     background-color: transparent;
     transition-duration: 0.4s;
+    cursor: pointer;
     border: 0px;
     width: 230px;
 }
