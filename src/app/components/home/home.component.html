@@ -1,3 +1,15 @@
+<div class="cart-div">
+    <!--(click)="openEditDialog(product)"-->
+    <button class="cart-button" [routerLink]="['/basket']" routerLinkActive='active' [routerLinkActiveOptions]="{exact: true}">
+        <table class="cart-table">
+            <tr>
+                <td><img class="cart-image-icon" src="../../../assets/cart_icon.png"></td>
+                <td>Shopping Cart</td>
+            </tr>
+        </table>
+     </button>
+</div>
+
 <div id="products-div">
     <div class="title-block">Пиццы</div>
     <div class="wrapper">

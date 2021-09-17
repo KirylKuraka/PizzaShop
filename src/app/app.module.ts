@@ -37,6 +37,7 @@ import { ProductEditComponent } from './components/products/product-edit/product
 import { AccountDeleteComponent } from './components/accounts/account-delete/account-delete.component';
 import { ProductDeleteComponent } from './components/products/product-delete/product-delete.component';
 import { ProductCreateComponent } from './components/products/product-create/product-create.component';
+import { BasketComponent } from './components/basket/basket.component';
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -58,6 +59,7 @@ export function tokenGetter(){
     AccountDeleteComponent,
     ProductDeleteComponent,
     ProductCreateComponent,
+    BasketComponent,
   ],
   exports: [
     AccountsComponent,
