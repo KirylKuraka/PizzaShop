@@ -1,10 +1,13 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, NumberValueAccessor } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Account } from 'src/app/models/account';
+import { AccountDataSource } from 'src/app/models/accountDataSource';
 import { Role } from 'src/app/models/role';
 import { AccountService } from 'src/app/services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -23,13 +26,18 @@ export class AccountsComponent implements OnInit, AfterViewInit {
   selectedRole = ['']
 
   account!: Account;
-  public showFlag: boolean = false;
   
-  public dataSource = new MatTableDataSource<Account>();
+  pageSize: number = 10
+  pageIndex: number = 0
+  sortOrder: string = "UserName"
+
+  accounts: Account[] = [];
+  dataSource!: AccountDataSource;
   columns = ['firstName', 'lastName', 'userName', 'email', 'phoneNumber', 'promotionalPoins', 'role', 'details', 'update', 'delete']
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild("searchInput") search!: ElementRef;
 
   constructor(private accountService: AccountService,
               private authService: AuthService,
@@ -37,26 +45,31 @@ export class AccountsComponent implements OnInit, AfterViewInit {
               ) { }
 
   ngOnInit(): void {
-    this.accountService.getAccounts()
-      .subscribe(res => {
-        this.dataSource.data = res as Account[]
-
-        for (let i = 0; i < this.dataSource.data.length; i++) {
-          this.authService.getUserRoleById(this.dataSource.data[i].userID)
-            .subscribe(res => {
-              this.dataSource.data[i].role = (res as Role).role
-          })
-        }
-      }) 
+    this.dataSource = new AccountDataSource(this.accountService, this.authService);
+    this.dataSource.loadAccounts("", this.sortOrder, this.pageIndex + 1, this.pageSize)
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
+    fromEvent(this.search.nativeElement, 'keyup')
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+          this.dataSource.loadAccounts(this.search.nativeElement.value, this.sortOrder, this.pageIndex + 1, this.pageSize)
+        })
+      )
+      .subscribe();
 
-  public doFilter = (event: Event) => {
-    this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0)
+    
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => {
+          this.dataSource.loadAccounts("", this.sort.active + " " + this.sort.direction, this.paginator.pageIndex + 1, this.paginator.pageSize)
+        })
+      )
+      .subscribe();
   }
 
   openDeleteDilog(account: Account): void {
@@ -69,13 +82,16 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         if (result){
-          this.dataSource.data = this.dataSource.data.filter((item) => {
-            return item.userID != account.userID;
-          })
-    
+          // this.dataSource.data = this.dataSource.data.filter((item) => {
+          //   return item.userID != account.userID;
+          // })
+          
+          
           this.accountService.deleteAccountById(account.userID)
             .subscribe(res => {
             })
+
+          this.dataSource.loadAccounts("", this.sortOrder, this.paginator.pageIndex + 1, this.paginator.pageSize)
         }
       }
     })
@@ -101,11 +117,6 @@ export class AccountsComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        let index = this.dataSource.data.findIndex((item) => {
-          return item.userID == result.account.userID
-        })
-  
-        this.dataSource.data[index] = result.account;
         this.accountService.updateAccountById(result.account.userID, result.account)
           .subscribe(res => {
           })

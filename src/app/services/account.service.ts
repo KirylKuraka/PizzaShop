@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -19,8 +19,8 @@ export class AccountService {
     return this.http.get<Account>(`${this.baseURL}`, {headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY))});
   }
 
-  getAccounts(): Observable<Account[]>{
-    return this.http.get<Account[]>(`${this.baseURL}all`, {headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY))});
+  getAccounts(search: string, sort: string, pageNumber: number, pageSize: number): Observable<HttpResponse<Account[]>>{
+    return this.http.get<Account[]>(`${this.baseURL}all?searchTerm=${search}&orderBy=${sort}&PageNumber=${pageNumber}&PageSize=${pageSize}`, {headers: new HttpHeaders().set('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN_KEY)), observe: 'response'});
   }
 
   getAccountById(id: string): Observable<Account>{

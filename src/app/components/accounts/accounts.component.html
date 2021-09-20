@@ -1,8 +1,12 @@
 <mat-card>
     <div class="filter-div-center">
         <mat-form-field>
-          <input matInput type="text" (keyup)="doFilter($event)" placeholder="Filter">
+          <input matInput type="text" placeholder="Filter" #searchInput>
         </mat-form-field>
+    </div>
+
+    <div class="spinner-container" *ngIf="dataSource.loading | async">
+        <mat-spinner color="primary" mode="indeterminate"></mat-spinner>
     </div>
 
     <mat-table [dataSource]="dataSource" matSort matSortDirection="asc" matSortActive="userName">
@@ -44,7 +48,7 @@
 
         <!--Role-->
         <ng-container *ngIf="true" matColumnDef="role">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>Role</mat-header-cell>
             <mat-cell *matCellDef="let account">{{account.role}}</mat-cell>
         </ng-container>
 
@@ -79,7 +83,7 @@
         <mat-row *matRowDef="let row; columns: columns;"></mat-row>
     </mat-table>
 
-    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 15, 20, 30, 40, 50]" showFirstLastButtons>
+    <mat-paginator [length]="dataSource.totalCount" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 15, 20, 30, 40, 50]" showFirstLastButtons >
     </mat-paginator>
 </mat-card>
 
