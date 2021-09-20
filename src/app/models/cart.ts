@@ -20,7 +20,7 @@ export class Cart {
     }
 
     /**
-     * GetTot
+     * GetTotalSum
      */
     public getTotalSum(): number {
         let sum: number = 0;
@@ -46,12 +46,12 @@ export class Cart {
     }
 
     /**
-     * convertFrom
+     * ConvertToObject
      */
     public static convertToObject() : Cart {
         let cartJsonString = localStorage.getItem("cart")
         let cart: Cart = new Cart();
-        if (cartJsonString != null) {
+        if (cartJsonString != null && cartJsonString != "") {
             try{
                 let tempObject = JSON.parse(cartJsonString) as Cart
                 cart.items = tempObject.items

@@ -13,13 +13,11 @@ export class CartComponent implements OnInit {
   columns = ['delete', 'picture', 'productName', 'cost', 'quantity']
 
   cart: Cart = new Cart();
-  text: string = "";
 
   constructor() { }
 
   ngOnInit(): void {
     this.cart = Cart.convertToObject();
-    this.text = JSON.stringify(this.cart);
 
     this.dataSource.data = this.cart.items
   }
