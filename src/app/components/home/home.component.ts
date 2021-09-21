@@ -23,11 +23,17 @@ export class HomeComponent implements OnInit {
 
   productTypeNames: string[] = [];
 
+  windowScrolled = false;
+
   cart: Cart = new Cart();
   constructor(private productService: ProductService,
               private productTypeService: ProductTypeService) { }
 
   ngOnInit(): void {
+    window.addEventListener('scroll', () => {
+      this.windowScrolled = window.pageYOffset !== 0;
+    });
+
     this.cart = Cart.convertToObject();
   
     this.productService.getProducts("Пицца", this.search, this.sort, this.pageNumber, this.pageSize)
@@ -60,5 +66,9 @@ export class HomeComponent implements OnInit {
       this.cart.addItem(new CartItem(product));
       Cart.convertToJSON(this.cart);
     }
+  }
+
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
   }
 }

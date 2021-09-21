@@ -73,4 +73,11 @@
             </div>
         </div>
     </div>
+
+    <div class="redirect-top-div" [ngClass]="{ 'show-scrollTop': windowScrolled }">
+        <button class="redirect-top-btn" mat-mini-fab (click)="scrollToTop()">
+            <mat-icon>keyboard_arrow_up</mat-icon>
+            To Top
+        </button>
+    </div>
 </mat-sidenav-container>
