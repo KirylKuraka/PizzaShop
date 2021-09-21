@@ -10,6 +10,10 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  search: string = ""
+  sort: string = ""
+  pageNumber: number = 1;
+  pageSize: number = 50;
 
   pizzas: Product[] = [];
   sauces: Product[] = [];
@@ -20,19 +24,19 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.cart = Cart.convertToObject();
   
-    this.productService.getProductsWithFilter("Пицца")
-      .subscribe(res => {
-        this.pizzas = res as Product[];
+    this.productService.getProducts("Пицца", this.search, this.sort, this.pageNumber, this.pageSize)
+      .subscribe((response: any) => {
+        this.pizzas = response.body.products;
       })
     
-    this.productService.getProductsWithFilter("Напиток")
-      .subscribe(res => {
-        this.drinks = res as Product[];
+    this.productService.getProducts("Напиток", this.search, this.sort, this.pageNumber, this.pageSize)
+      .subscribe((response: any) => {
+        this.drinks = response.body.products;
       })
 
-    this.productService.getProductsWithFilter("Соус")
-      .subscribe(res => {
-        this.sauces = res as Product[];
+    this.productService.getProducts("Соус", this.search, this.sort, this.pageNumber, this.pageSize)
+      .subscribe((response: any) => {
+        this.sauces = response.body.products;
       })
   }
 

@@ -1,14 +1,12 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl, NumberValueAccessor } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { fromEvent, merge } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Account } from 'src/app/models/account';
 import { AccountDataSource } from 'src/app/models/accountDataSource';
-import { Role } from 'src/app/models/role';
 import { AccountService } from 'src/app/services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { AccountDeleteComponent } from './account-delete/account-delete.component';
@@ -31,7 +29,6 @@ export class AccountsComponent implements OnInit, AfterViewInit {
   pageIndex: number = 0
   sortOrder: string = "UserName"
 
-  accounts: Account[] = [];
   dataSource!: AccountDataSource;
   columns = ['firstName', 'lastName', 'userName', 'email', 'phoneNumber', 'promotionalPoins', 'role', 'details', 'update', 'delete']
 
@@ -41,8 +38,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
 
   constructor(private accountService: AccountService,
               private authService: AuthService,
-              private dialog: MatDialog
-              ) { }
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.dataSource = new AccountDataSource(this.accountService, this.authService);
@@ -66,7 +62,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         tap(() => {
-          this.dataSource.loadAccounts("", this.sort.active + " " + this.sort.direction, this.paginator.pageIndex + 1, this.paginator.pageSize)
+          this.dataSource.loadAccounts(this.search.nativeElement.value, this.sort.active + " " + this.sort.direction, this.paginator.pageIndex + 1, this.paginator.pageSize)
         })
       )
       .subscribe();
@@ -84,7 +80,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
         if (result){
           this.accountService.deleteAccountById(account.userID)
           .subscribe(res => {
-              this.dataSource.loadAccounts("", this.sortOrder, this.paginator.pageIndex + 1, this.paginator.pageSize)
+              this.dataSource.loadAccounts(this.search.nativeElement.value, this.sortOrder, this.paginator.pageIndex + 1, this.paginator.pageSize)
           });
         }
       }

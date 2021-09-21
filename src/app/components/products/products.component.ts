@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { fromEvent, merge } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Product } from 'src/app/models/product';
-import { ProductType } from 'src/app/models/productType';
+import { ProductDataSource } from 'src/app/models/productDataSource';
 import { ProductService } from 'src/app/services/product.service';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductDeleteComponent } from './product-delete/product-delete.component';
@@ -18,36 +18,47 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
-  public dataSource = new MatTableDataSource<Product>();
+  pageSize: number = 10
+  pageIndex: number = 0
+  sortOrder: string = "ProductName"
+  filterType: string = ""
+
+  dataSource!: ProductDataSource;
   columns = ['productType.productTypeName', 'productName', 'description', 'cost', 'promotionalPointsCost', 'details', 'update', 'delete']
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild("searchInput") search!: ElementRef;
   
   constructor(private productService: ProductService,
               private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.productService.getProducts()
-      .subscribe(res => {
-        this.dataSource.data = res as Product[]
-      }) 
+    this.dataSource = new ProductDataSource(this.productService);
+    this.dataSource.loadProducts(this.filterType, "", this.sortOrder, this.pageIndex + 1, this.pageSize)
   }
 
   ngAfterViewInit(): void {
-    // this.dataSource.sortingDataAccessor = (item, property) => {
-    //   switch(property) {
-    //     case 'productType.productTypeName': return item.productType.productTypeName;
-    //     default: return item[property];
-    //   }
-    // };
+    fromEvent(this.search.nativeElement, 'keyup')
+    .pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
+      tap(() => {
+        this.paginator.pageIndex = 0;
+        this.dataSource.loadProducts(this.filterType, this.search.nativeElement.value, this.sortOrder, this.pageIndex + 1, this.pageSize)
+      })
+    )
+    .subscribe();
 
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-  }
-
-  public doFilter = (event: Event) => {
-    this.dataSource.filter = (event.target as HTMLInputElement).value.trim().toLocaleLowerCase();
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0)
+  
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        tap(() => {
+          this.dataSource.loadProducts(this.filterType, this.search.nativeElement.value, this.sort.active + " " + this.sort.direction, this.paginator.pageIndex + 1, this.paginator.pageSize)
+        })
+      )
+      .subscribe();
   }
 
   openCreateDialog(): void{
@@ -58,8 +69,6 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {  
-        this.dataSource.data = this.dataSource.data.concat([result])
-
         let product = new Product(result.productID,
                                   result.productName,
                                   result.description,
@@ -69,6 +78,8 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
         this.productService.createProduct(product)
           .subscribe(res => {
+            this.pageIndex = 0;
+            this.dataSource.loadProducts(this.filterType, "", this.sortOrder, this.pageIndex + 1, this.pageSize);
           })
       }
     })
@@ -84,12 +95,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         if (result){
-          this.dataSource.data = this.dataSource.data.filter((item) => {
-            return item.productID != product.productID;
-          })
-    
           this.productService.deleteProductById(product.productID)
             .subscribe(res => {
+              this.dataSource.loadProducts(this.filterType, this.search.nativeElement.value, this.sortOrder, this.paginator.pageIndex + 1, this.paginator.pageSize)
             })
         }
       }
@@ -116,13 +124,9 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
-        let index = this.dataSource.data.findIndex((item) => {
-          return item.productID == result.product.productID
-        })
-
-        this.dataSource.data[index] = result.product;
         this.productService.updateProductById(result.product.productID, result.product)
           .subscribe(res => {      
+            this.dataSource.loadProducts(this.filterType, this.search.nativeElement.value, this.sortOrder, this.paginator.pageIndex + 1, this.paginator.pageSize)
           })
       }
     })

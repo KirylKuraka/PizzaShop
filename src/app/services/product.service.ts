@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Inject } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -14,12 +14,8 @@ export class ProductService {
 
   constructor(private http : HttpClient, @Inject(PRODUCT_API_URL) private apiURL: string) { }
 
-  getProducts(): Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.baseURL}`);
-  }
-
-  getProductsWithFilter(filterTerm: string): Observable<Product[]>{
-    return this.http.get<Product[]>(`${this.baseURL}?FilterTerm=${filterTerm}`);
+  getProducts(filterTerm: string, search: string, sort: string, pageNumber: number, pageSize: number): Observable<HttpResponse<Product[]>>{
+    return this.http.get<Product[]>(`${this.baseURL}?FilterTerm=${filterTerm}&searchTerm=${search}&orderBy=${sort}&PageNumber=${pageNumber}&PageSize=${pageSize}`, {observe: 'response'});
   }
 
   getProductById(id: string): Observable<Product>{
