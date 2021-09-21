@@ -2,6 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Cart } from 'src/app/models/cart';
 import { CartItem } from 'src/app/models/cartItem';
 import { Product } from 'src/app/models/product';
+import { ProductType } from 'src/app/models/productType';
+import { ProductTypeService } from 'src/app/services/product-type.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -18,8 +20,12 @@ export class HomeComponent implements OnInit {
   pizzas: Product[] = [];
   sauces: Product[] = [];
   drinks: Product[] = [];
+
+  productTypeNames: string[] = [];
+
   cart: Cart = new Cart();
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,
+              private productTypeService: ProductTypeService) { }
 
   ngOnInit(): void {
     this.cart = Cart.convertToObject();
@@ -37,6 +43,11 @@ export class HomeComponent implements OnInit {
     this.productService.getProducts("Соус", this.search, this.sort, this.pageNumber, this.pageSize)
       .subscribe((response: any) => {
         this.sauces = response.body.products;
+      })
+
+    this.productTypeService.getProductTypes()
+      .subscribe(response => {
+        this.productTypeNames = (response as ProductType[]).map(value => value.productTypeName);
       })
   }
 

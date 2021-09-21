@@ -17,6 +17,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatListModule } from "@angular/material/list";
+import { MatDividerModule } from "@angular/material/divider";
 
 import { ACCOUNT_API_URL, IDENTITY_API_URL, PRODUCT_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
@@ -38,6 +41,7 @@ import { AccountDeleteComponent } from './components/accounts/account-delete/acc
 import { ProductDeleteComponent } from './components/products/product-delete/product-delete.component';
 import { ProductCreateComponent } from './components/products/product-create/product-create.component';
 import { CartComponent } from './components/cart/cart.component';
+
 
 export function tokenGetter(){
   return localStorage.getItem(ACCESS_TOKEN_KEY);
@@ -82,6 +86,9 @@ export function tokenGetter(){
     MatDialogModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule,
 
     ReactiveFormsModule,
 
