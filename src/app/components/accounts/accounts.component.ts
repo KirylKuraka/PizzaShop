@@ -82,16 +82,10 @@ export class AccountsComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result != null) {
         if (result){
-          // this.dataSource.data = this.dataSource.data.filter((item) => {
-          //   return item.userID != account.userID;
-          // })
-          
-          
           this.accountService.deleteAccountById(account.userID)
-            .subscribe(res => {
-            })
-
-          this.dataSource.loadAccounts("", this.sortOrder, this.paginator.pageIndex + 1, this.paginator.pageSize)
+          .subscribe(res => {
+              this.dataSource.loadAccounts("", this.sortOrder, this.paginator.pageIndex + 1, this.paginator.pageSize)
+          });
         }
       }
     })
