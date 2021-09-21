@@ -26,7 +26,7 @@ export class AccountDataSource implements DataSource<Account> {
         this.loadingSubject.complete();
     }
 
-    loadAccounts(search: string = "", sort: string = "UserName", pageIndex: number = 1, pageSize: number = 10){
+    loadAccounts(search: string = "", sort: string = "username", pageIndex: number = 1, pageSize: number = 10){
         this.loadingSubject.next(true);
 
         this.accountService.getAccounts(search, sort, pageIndex, pageSize).pipe(
@@ -36,12 +36,12 @@ export class AccountDataSource implements DataSource<Account> {
         .subscribe((response: any) => {
             let temp: Account[] = response.body.accounts;
 
-            // for (let i = 0; i < temp.length; i++) {
-            //     this.authService.getUserRoleById(temp[i].userID)
-            //       .subscribe(res => {
-            //         temp[i].role = (res as Role).role
-            //     })
-            //   }
+            for (let i = 0; i < temp.length; i++) {
+                this.authService.getUserRoleById(temp[i].userID)
+                  .subscribe(res => {
+                    temp[i].role = (res as Role).role
+                })
+              }
             
             this.accounsSubject.next(response.body.accounts)
             this.totalCount = response.body.totalCount

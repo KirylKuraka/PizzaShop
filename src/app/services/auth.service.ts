@@ -29,10 +29,7 @@ export class AuthService {
     return this.http.post<Token>(`${this.apiURL}authentication/login`, {
       username, password
     }).pipe(
-      tap(token => {
-        console.log(token.token)
-        console.log(token.refreshToken);
-        
+      tap(token => {        
         localStorage.setItem(ACCESS_TOKEN_KEY, token.token)
         localStorage.setItem(REFRESH_TOKEN_KEY, token.refreshToken)
 

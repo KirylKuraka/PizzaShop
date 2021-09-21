@@ -54,7 +54,6 @@ export class RegistrationComponent implements OnInit {
     if (this.matchPasswords(user.password, formValues.passwordConfirm)) {
       this.as.registration(user)
       .subscribe(res => {
-        console.log("Succesful registration")
         this.navigateToLogin();
       },
       err => {        
