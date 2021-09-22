@@ -41,6 +41,8 @@ import { AccountDeleteComponent } from './components/accounts/account-delete/acc
 import { ProductDeleteComponent } from './components/products/product-delete/product-delete.component';
 import { ProductCreateComponent } from './components/products/product-create/product-create.component';
 import { CartComponent } from './components/cart/cart.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { OrderCreateComponent } from './components/orders/order-create/order-create.component';
 
 
 export function tokenGetter(){
@@ -64,6 +66,8 @@ export function tokenGetter(){
     ProductDeleteComponent,
     ProductCreateComponent,
     CartComponent,
+    OrdersComponent,
+    OrderCreateComponent,
   ],
   exports: [
     AccountsComponent,

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Cart } from 'src/app/models/cart';
 import { CartItem } from 'src/app/models/cartItem';
+import { OrderCreateComponent } from '../orders/order-create/order-create.component';
 
 @Component({
   selector: 'app-cart',
@@ -15,7 +17,8 @@ export class CartComponent implements OnInit {
 
   cart: Cart = new Cart();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.cart = Cart.convertToObject();
@@ -59,6 +62,33 @@ export class CartComponent implements OnInit {
     this.router.navigateByUrl('');
   }
 
-  createOrder() {
+  createOrder(): void {
+    const dialogRef = this.dialog.open(OrderCreateComponent, {
+      width: 'auto',
+      height: 'auto'
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != null) {
+        alert("Ok")
+      }
+      else{
+        alert("Bad")
+      }
+      // if (result != null) {  
+      //   let product = new Product(result.productID,
+      //                             result.productName,
+      //                             result.description,
+      //                             result.cost,
+      //                             result.promotionalPointsCost,
+      //                             result.productTypeID)
+
+      //   this.productService.createProduct(product)
+      //     .subscribe(res => {
+      //       this.pageIndex = 0;
+      //       this.dataSource.loadProducts(this.filterType, "", this.sortOrder, this.pageIndex + 1, this.pageSize);
+      //     })
+      // }
+    })
   }
 }
