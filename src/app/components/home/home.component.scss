@@ -102,7 +102,9 @@ div{
     transition-duration: 0.4s;
     cursor: pointer;
     border: 0px;
-    width: 230px;
+    width: auto;
+    padding-right: 5px;
+    padding-left: 5px;
 }
 
 .cart-button:hover{
