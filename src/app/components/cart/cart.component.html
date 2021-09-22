@@ -1,7 +1,6 @@
 <h1>Корзина</h1>
 
 <div class="full-cart">
-    <!--action="create-order" method="POST"-->
     <div class="cart">
         <mat-table [dataSource]="dataSource">
             <ng-container matColumnDef="delete">
@@ -42,6 +41,18 @@
         <div class="sum-div">
             <p>Общая сумма: {{getTotalSum().toFixed(2)}} руб.</p>
         </div>
+
+        <div class="cart-btn-menu">
+            <div class="back-menu-btn-div">
+                <button style="border: 1px solid #afafaf;" (click)="redirectToHome()">Вернуться в меню</button>
+            </div>
+    
+            <div class="order-btn-div">
+                <button style="border: 1px solid #afafaf;" (click)="createOrder()">Оформить заказ</button>
+            </div>
+        </div>
     </div>
 </div>
+
+<footer></footer>
 

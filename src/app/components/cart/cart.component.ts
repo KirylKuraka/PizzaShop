@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { Cart } from 'src/app/models/cart';
 import { CartItem } from 'src/app/models/cartItem';
 
@@ -14,7 +15,7 @@ export class CartComponent implements OnInit {
 
   cart: Cart = new Cart();
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.cart = Cart.convertToObject();
@@ -52,5 +53,12 @@ export class CartComponent implements OnInit {
 
   getTotalSum(): number {
     return this.cart.getTotalSum();
+  }
+
+  redirectToHome(){
+    this.router.navigateByUrl('');
+  }
+
+  createOrder() {
   }
 }
