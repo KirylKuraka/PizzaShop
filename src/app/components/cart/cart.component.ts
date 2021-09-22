@@ -91,4 +91,8 @@ export class CartComponent implements OnInit {
       // }
     })
   }
+
+  cartIsEmpty() {
+    return this.cart.items.length == 0;
+  }
 }
