@@ -1,1 +1,100 @@
-<p>orders works!</p>
+<mat-card>
+    <div class="filter-div-center">
+        <mat-form-field>
+          <input matInput type="text" placeholder="Filter" #searchInput>
+        </mat-form-field>
+    </div>
+
+    <div class="spinner-container" *ngIf="dataSource.loading | async">
+        <mat-spinner color="primary" mode="indeterminate"></mat-spinner>
+    </div>
+
+    <mat-table [dataSource]="dataSource" matSort matSortDirection="asc" matSortActive="order.orderDate">
+        <!--Order Date-->
+        <ng-container matColumnDef="order.orderDate">
+            <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.order.orderDate}}</mat-cell>
+        </ng-container>
+
+        <!--Type-->
+        <ng-container matColumnDef="productType.productTypeName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.productType.productTypeName}}</mat-cell>
+        </ng-container>
+
+        <!--Name-->
+        <ng-container matColumnDef="productName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.productName}}</mat-cell>
+        </ng-container>
+
+        <!--Quantity-->
+        <ng-container matColumnDef="quantity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Quantity</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.quantity}}</mat-cell>
+        </ng-container>
+
+        <!--TotalCost-->
+        <ng-container matColumnDef="totalCost">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Cost</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.totalCost}}</mat-cell>
+        </ng-container>
+
+        <!--Customer-->
+        <ng-container matColumnDef="order.customer.customerName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Customer</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.order.customer.customerName}}</mat-cell>
+        </ng-container>
+
+        <!--Delivery-->
+        <ng-container matColumnDef="order.deliveryMethod.deliveryMethodName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Delivery</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.order.deliveryMethod.deliveryMethodName}}</mat-cell>
+        </ng-container>
+
+        <!--Payment-->
+        <ng-container matColumnDef="order.paymentMethod.paymentMethodName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Payment</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.order.paymentMethod.paymentMethodName}}</mat-cell>
+        </ng-container>
+
+        <!--Status-->
+        <ng-container matColumnDef="order.orderStatus.orderStatusName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+            <mat-cell *matCellDef="let orderedProduct">{{orderedProduct.order.orderStatus.orderStatusName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="details">
+            <mat-header-cell *matHeaderCellDef> Details </mat-header-cell>
+            <mat-cell *matCellDef="let product">
+              <button mat-icon-button color="primary" (click)="openDetailsDialog(product)">
+                <img class="image-icon" src="../../../assets/details_icon.ico">
+          </button>
+            </mat-cell>
+          </ng-container>
+
+        <ng-container matColumnDef="update">
+            <mat-header-cell *matHeaderCellDef> Update </mat-header-cell>
+            <mat-cell *matCellDef="let product">
+                 <button mat-icon-button color="accent" (click)="openEditDialog(product)">
+                    <img class="image-icon" src="../../../assets/edit_icon.ico">
+                 </button>
+            </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+            <mat-cell *matCellDef="let product">
+                <button class="delete-btn" mat-icon-button color="warn" (click)="openDeleteDialog(product)">
+                    <img class="image-icon" src="../../../assets/delete_icon.ico">
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="dataSource.totalCount" [pageSize]="pageSize" [pageIndex]="pageIndex" [pageSizeOptions]="[5, 10, 15, 20, 30, 40, 50]" showFirstLastButtons >
+    </mat-paginator>
+</mat-card>

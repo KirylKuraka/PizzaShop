@@ -48,7 +48,7 @@ export class AccountsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     fromEvent(this.search.nativeElement, 'keyup')
       .pipe(
-        debounceTime(150),
+        debounceTime(500),
         distinctUntilChanged(),
         tap(() => {
           this.paginator.pageIndex = 0;

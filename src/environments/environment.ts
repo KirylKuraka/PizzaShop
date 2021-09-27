@@ -7,6 +7,7 @@ export const environment = {
   identityAPI: 'https://localhost:44342/',
   accountAPI: 'https://localhost:44343/',
   productAPI: 'https://localhost:44344/',
+  orderAPI: 'https://localhost:44345/',
   tokenWhiteListedDomains: 'localhost:44343'
 };
 

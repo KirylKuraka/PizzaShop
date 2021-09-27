@@ -1,0 +1,60 @@
+.login-error-div {
+    width: auto;
+}
+
+.login-error-div p {
+    font-size: 18px;
+}
+
+.buttons-div {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn-item-div {
+    padding: 8px;
+    margin: 15px 5px;
+}
+
+.btn-item-div button {
+    width: 100px;
+}
+
+#order-div{
+    margin:0 auto;
+    width:100%;
+}
+
+.save-button-div{
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.mat-form-field-infix {
+    width: auto;
+    padding: 0;
+    border-top-width: 0;
+}
+
+.create-order-form {
+    width: auto;
+    height: auto;
+    min-width: 400px;
+    max-width: 700px;
+    font-size: 20px;
+    margin: 0;
+}
+
+.error-div {
+    color: red;
+    font-size: 14px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.example-radio-group {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+  }

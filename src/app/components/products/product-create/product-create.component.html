@@ -27,7 +27,7 @@
                 <div class="form-group row">
                     <mat-form-field class="mat-form-field-infix">
                         <mat-label for="cost" class="col-form-label col-sm-2">Cost</mat-label>
-                        <input class="input-width-max" type="number" matInput id="cost" formControlName="cost" placeholder="Cost" #cost required>
+                        <input class="input-width-max" min="0" type="number" matInput id="cost" formControlName="cost" placeholder="Cost" #cost required>
                     </mat-form-field>
                     <div class="col-md-5 error-div">
                         <em *ngIf="validateControl('cost') && hasError('cost', 'required')">Cost is required</em>
@@ -37,7 +37,7 @@
                 <div class="form-group row">
                     <mat-form-field class="mat-form-field-infix">
                         <mat-label for="pPoints" class="col-form-label col-sm-2">PPoints cost</mat-label>
-                        <input class="input-width-max" type="number" matInput id="pPoints" formControlName="pPoints" placeholder="PPoints" #pPoints required>
+                        <input class="input-width-max" min="0" type="number" matInput id="pPoints" formControlName="pPoints" placeholder="PPoints" #pPoints required>
                     </mat-form-field>
                     <div class="col-md-5 error-div">
                         <em *ngIf="validateControl('pPoints') && hasError('pPoints', 'required')">PPoints cost is required</em>

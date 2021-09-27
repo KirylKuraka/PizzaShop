@@ -1,3 +1,65 @@
-<p>{{text}}</p>
+<div *ngIf="!isLoggedIn">
+    <div class="login-error-div">
+        <div>
+            <p>Для оформления заказа необходимо пройти авторизацию.</p>
+        </div>
+        <div class="buttons-div">
+            <div class="btn-item-div">
+                <button mat-flat-button color="primary" autofocus="false" (click)="redirectToLogin()">Login</button>
+            </div>
+            <div class="btn-item-div">
+                <button mat-flat-button color="primary" autofocus="false" (click)="redirectToRegister()">Register</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-<button mat-flat-button color="primary" (click)="saveChanges()">Сохранить</button>
+<div id="order-div" *ngIf="isLoggedIn">
+    <mat-card class="create-order-form">
+        <!-- <p>{{text}}</p> -->
+        
+        <form  [formGroup]="createOrderForm" autocomplete="off" novalidate>
+            <div class="form-group row">
+                <mat-form-field class="mat-form-field-infix">
+                    <input class="input-width-max" type="text" matInput id="name" formControlName="name" placeholder="Name" #name required>
+                </mat-form-field>
+                <div class="col-md-5 error-div">
+                    <em *ngIf="validateControl('name') && hasError('name', 'required')">Name is required</em>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <mat-form-field class="mat-form-field-infix">
+                    <mat-label for="phoneNumber" class="col-form-label col-sm-2">Phone</mat-label>
+                    <input type="text" matInput id="phoneNumber" formControlName="phoneNumber" placeholder="+375*********" #phoneNumber pattern="^(\+375|80)(29|25|44|33)(\d{3})(\d{2})(\d{2})$">
+                </mat-form-field>  
+                <div class="col-md-5 error-div">
+                    <em *ngIf="validateControl('phoneNumber') && hasError('phoneNumber', 'required')">Phone number is required</em>
+                    <em *ngIf="validateControl('phoneNumber') && hasError('phoneNumber', 'pattern')">Please provide a valid phone number</em>
+                </div>
+            </div>
+
+            <div class="form-group row div-info">
+                <mat-form-field class="mat-form-field-infix">
+                    <mat-label>Delivery method</mat-label>
+                    <mat-select [formControl]="deliveryMethodSelect" [(value)]="selectedDeliveryMethod" >
+                        <mat-option *ngFor="let method of deliveryMethods" [value]="method">{{method}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div> 
+
+            <div class="form-group row">
+                <mat-form-field class="mat-form-field-infix">
+                    <mat-label for="phoneNumber" class="col-form-label col-sm-2">Comment</mat-label>
+                    <textarea class="input-width-max" [matTextareaAutosize]='true' matInput id="comment" formControlName="comment" placeholder="Comment" #comment></textarea>
+                </mat-form-field>
+            </div>
+        </form>
+        
+    </mat-card>
+
+    <div class="form-group row save-button-div">
+        <button mat-flat-button color="primary" (click)="saveChanges()" [disabled]="!createOrderForm.valid">Order</button>
+    </div>
+</div>
+

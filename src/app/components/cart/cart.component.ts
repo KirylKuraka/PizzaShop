@@ -69,12 +69,12 @@ export class CartComponent implements OnInit {
     })
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result != null) {
-        alert("Ok")
-      }
-      else{
-        alert("Bad")
-      }
+      // if (result != null) {
+      //   alert("Ok")
+      // }
+      // else{
+      //   alert("Bad")
+      // }
       // if (result != null) {  
       //   let product = new Product(result.productID,
       //                             result.productName,

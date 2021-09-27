@@ -64,7 +64,6 @@ export class AuthService {
     localStorage.removeItem(REFRESH_TOKEN_KEY);
     localStorage.setItem("isAdmin", "false")
     localStorage.setItem("currentUserRole", "")
-    localStorage.setItem("cart", "")
     this.router.navigate(['']);
   }
   

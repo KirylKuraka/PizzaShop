@@ -20,8 +20,9 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatDividerModule } from "@angular/material/divider";
+import { MatRadioModule } from "@angular/material/radio";
 
-import { ACCOUNT_API_URL, IDENTITY_API_URL, PRODUCT_API_URL } from './app-injection-tokens';
+import { ACCOUNT_API_URL, IDENTITY_API_URL, ORDER_API_URL, PRODUCT_API_URL } from './app-injection-tokens';
 import { environment } from 'src/environments/environment';
 import { JwtModule } from "@auth0/angular-jwt";
 import { ACCESS_TOKEN_KEY } from "./services/auth.service";
@@ -93,6 +94,7 @@ export function tokenGetter(){
     MatSidenavModule,
     MatListModule,
     MatDividerModule,
+    MatRadioModule,
 
     ReactiveFormsModule,
 
@@ -115,6 +117,10 @@ export function tokenGetter(){
   {
     provide: PRODUCT_API_URL,
     useValue: environment.productAPI
+  },
+  {
+    provide: ORDER_API_URL,
+    useValue: environment.orderAPI
   }],
   bootstrap: [AppComponent],
 })
